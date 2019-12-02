@@ -1,4 +1,28 @@
 from abc import *
+from breadpan.entity import IEntity
+
+
+class IDataAccessGateway(metaclass=ABCMeta):
+    """Interface of data access class. 
+    """
+        
+    @abstractmethod
+    def create(self, entity: IEntity):
+        pass
+
+    @abstractmethod
+    def read(self,  **kwargs) -> IEntity:
+        pass
+
+    @abstractmethod
+    def update(self, entity: IEntity, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete(self,  entity: IEntity):
+        pass
+
+
 
 class IUsecaseInputPort(object):
     """Interface of use case input port.
@@ -19,6 +43,12 @@ class IUsecaseInteractor(IUsecaseInputPort):
     """IUsecaseInteractor
 
     """
+    __data_access = None
+
+    def __init__( d : IDataAccessGateway):
+        self.__data_access = d
+
+
     @abstractmethod
     def run(self):
         """operate

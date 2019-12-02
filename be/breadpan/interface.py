@@ -12,6 +12,7 @@ class IController(metaclass=ABCMeta):
     """Interface of data controller class.
 
     """
+
     @abstractmethod
     def create(self, **kwargs) -> IPresenter:
         pass
@@ -26,27 +27,5 @@ class IController(metaclass=ABCMeta):
 
     @abstractmethod
     def delete(self,  **kwargs) -> IPresenter:
-        pass
-
-
-
-class IDataAccessGateway(metaclass=ABCMeta):
-    """Interface of data access class. 
-    """
-        
-    @abstractmethod
-    def create(self, entity: IEntity):
-        pass
-
-    @abstractmethod
-    def read(self,  **kwargs) -> IEntity:
-        pass
-
-    @abstractmethod
-    def update(self, entity: IEntity, **kwargs):
-        pass
-
-    @abstractmethod
-    def delete(self,  entity: IEntity):
         pass
 

@@ -1,11 +1,29 @@
 
-from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor
+from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor, IDataAccessGateway
+from todo.entiry import ToDoEntity
 
-TODOS = {
-    'todo1': {'task': 'build an API'},
-    'todo2': {'task': '?????'},
-    'todo3': {'task': 'profit!'},
-}
+class TodoDataAccessWithMem(IDataAccessGateway):
+
+    def __init__(self):
+        self.TODOS = {
+        'todo1': {'task': 'build an API'},
+        'todo2': {'task': '?????'},
+        'todo3': {'task': 'profit!'},
+    }
+
+    def create(self, entity: ToDoEntity):
+        self.TODOS[entity.todo_id] = entity.todo
+
+    def read(self,  todo_id) -> ToDoEntity:
+        return ToDoEntity(todo_id, self.TODOS[todo_id])
+
+    def update(self, entity: ToDoEntity, **kwargs):
+        pass
+
+    def delete(self,  entity: IEntity):
+        pass
+
+
 
 class ToDoOutputPort(IUsecaseOutputPort):
     def __init__(self, **kwargs):

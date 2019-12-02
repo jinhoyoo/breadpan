@@ -1,4 +1,4 @@
-from breadpan.interface import IController, IPresenter, IDataAccessGateway
+from breadpan.interface import IController, IPresenter
 from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor
 from todo.usecase import ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
 
