@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from breadpan.usecase import IUsecaseOutputPort
+from breadpan.entity import IEntity
 
 class IPresenter(IUsecaseOutputPort):
     def __init__(self, output_port: IUsecaseOutputPort):
@@ -27,4 +28,25 @@ class IController(metaclass=ABCMeta):
     def delete(self,  **kwargs) -> IPresenter:
         pass
 
+
+
+class IDataAccessGateway(metaclass=ABCMeta):
+    """Interface of data access class. 
+    """
+        
+    @abstractmethod
+    def create(self, entity: IEntity):
+        pass
+
+    @abstractmethod
+    def read(self,  **kwargs) -> IEntity:
+        pass
+
+    @abstractmethod
+    def update(self, entity: IEntity, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete(self,  entity: IEntity):
+        pass
 

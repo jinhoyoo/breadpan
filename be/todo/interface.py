@@ -1,4 +1,4 @@
-from breadpan.interface import IController, IPresenter
+from breadpan.interface import IController, IPresenter, IDataAccessGateway
 from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor
 from todo.usecase import ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
 
@@ -29,3 +29,41 @@ class ToDoController(IController):
         i = ToDoUpdateInteractor()
         i.input(todo_id=todo_id, contents=contents)
         return ToDoPresenter(i.run())
+
+
+
+class ToDoDataAccess(IDataAccess):
+
+    __model = None
+
+    def create(self, **kwargs):
+        return self.__model.create(**kwargs)
+
+    def read(self,  **kwargs):
+        return self.__model.read(**kwargs)
+
+    def update(self,  **kwargs):
+        return self.__model.update(**kwargs)
+
+    def delete(self,  **kwargs):
+        return self.__model.delete(**kwargs)
+
+
+class ToDoDataAccessLocal(IDataAccess):
+    TODOS = {
+        'todo1': {'task': 'build an API'},
+        'todo2': {'task': '?????'},
+        'todo3': {'task': 'profit!'},
+    }
+
+    def create(self, key, value):
+        pass
+
+    def read(self, key):
+        pass
+
+    def update(self, key, value):
+        pass
+
+    def delete(self, key):
+        pass

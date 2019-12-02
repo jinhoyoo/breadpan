@@ -37,3 +37,6 @@ class IUsecaseOutputPort(metaclass=ABCMeta):
         for key, value in kwargs.items():
             self.data[key] = value
     
+
+
+
