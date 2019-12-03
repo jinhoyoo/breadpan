@@ -15,11 +15,15 @@ class IDataAccessGateway(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def update(self, entity: IEntity, **kwargs):
+    def read_all(self, **kwargs):
         pass
 
     @abstractmethod
-    def delete(self,  entity: IEntity):
+    def update(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete(self,  **kwargs):
         pass
 
 
@@ -43,10 +47,10 @@ class IUsecaseInteractor(IUsecaseInputPort):
     """IUsecaseInteractor
 
     """
-    __data_access = None
+    __data_gateway = None
 
-    def __init__( d : IDataAccessGateway):
-        self.__data_access = d
+    def __init__(self, d : IDataAccessGateway):
+        self.__data_gateway = d
 
 
     @abstractmethod

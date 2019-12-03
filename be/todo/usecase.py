@@ -5,11 +5,7 @@ from todo.entiry import ToDoEntity
 class TodoDataAccessWithMem(IDataAccessGateway):
 
     def __init__(self):
-        self.TODOS = {
-        'todo1': {'task': 'build an API'},
-        'todo2': {'task': '?????'},
-        'todo3': {'task': 'profit!'},
-    }
+        self.TODOS = {}
 
     def create(self, entity: ToDoEntity):
         self.TODOS[entity.todo_id] = entity.todo
@@ -17,10 +13,14 @@ class TodoDataAccessWithMem(IDataAccessGateway):
     def read(self,  todo_id) -> ToDoEntity:
         return ToDoEntity(todo_id, self.TODOS[todo_id])
 
-    def update(self, entity: ToDoEntity, **kwargs):
-        pass
+    def read_all(self):
+        return self.TODOS
 
-    def delete(self,  entity: IEntity):
+    def update(self, entity: ToDoEntity, **kwargs):
+        self.TODOS[entity.todo_id] = entity.todo
+        return
+
+    def delete(self, todo_id):
         pass
 
 
@@ -36,24 +36,26 @@ class ToDoCreateInteractor(IUsecaseInteractor):
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
+        t = ToDoEntity(todo_id, contents)
 
         # Store the data. 
-        TODOS[todo_id] = contents
+        self.__data_gateway.create(t)
 
         # Link to output port
-        return ToDoOutputPort(todo={todo_id:TODOS[todo_id]})
+        return ToDoOutputPort(todo=t.__dict__)
 
 class ToDoUpdateInteractor(IUsecaseInteractor):
     def run(self):        
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
+        t = ToDoEntity(todo_id, contents)
 
         # Store the data. 
-        TODOS[todo_id] = contents
+        self.__data_gateway.update(t)
 
         # Link to output port
-        return ToDoOutputPort(todo={todo_id:TODOS[todo_id]})
+        return ToDoOutputPort(todo=t.__dict__)
 
 
 class ToDoReadInteractor(IUsecaseInteractor):
@@ -61,14 +63,16 @@ class ToDoReadInteractor(IUsecaseInteractor):
         # Get task ID
         todo_id = self.data["todo_id"]
 
-        # Link to output port
-        return ToDoOutputPort(todo={todo_id:TODOS[todo_id]})
+        # Read data.
+        t = self.__data_gateway.read(todo_id)
+
+        return ToDoOutputPort(todo=t.__dict__)
 
 
 class ToDoReadAllInteractor(IUsecaseInteractor):
     def run(self):
         # Link to output port
-        return ToDoOutputPort(todo=TODOS)
+        return ToDoOutputPort(todo=self.__data_gateway.read_all().__dict__)
 
 
 class ToDoDeleteInteractor(IUsecaseInteractor):
