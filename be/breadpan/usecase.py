@@ -1,7 +1,6 @@
 from abc import *
 from breadpan.entity import IEntity
 
-
 class IDataAccessGateway(metaclass=ABCMeta):
     """Interface of data access class. 
     """
@@ -11,7 +10,7 @@ class IDataAccessGateway(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def read(self,  **kwargs) -> IEntity:
+    def read(self,  **kwargs):
         pass
 
     @abstractmethod
@@ -47,14 +46,8 @@ class IUsecaseInteractor(IUsecaseInputPort):
     """IUsecaseInteractor
 
     """
-    __data_gateway = None
-
-    def __init__(self, d : IDataAccessGateway):
-        self.__data_gateway = d
-
-
     @abstractmethod
-    def run(self):
+    def run(self, data: IDataAccessGateway):
         """operate
         Will return the class inherited from IUsecaseOutputPort.
         """
