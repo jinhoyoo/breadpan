@@ -1,5 +1,5 @@
 from breadpan.interface import IController, IPresenter
-from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor
+from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor, IDataAccessGateway
 from todo.usecase import ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
 
 class ToDoPresenter(IPresenter):
@@ -32,7 +32,7 @@ class ToDoController(IController):
 
 
 
-class ToDoDataAccess(IDataAccess):
+class ToDoDataAccess(IDataAccessGateway):
 
     __model = None
 
@@ -47,23 +47,3 @@ class ToDoDataAccess(IDataAccess):
 
     def delete(self,  **kwargs):
         return self.__model.delete(**kwargs)
-
-
-class ToDoDataAccessLocal(IDataAccess):
-    TODOS = {
-        'todo1': {'task': 'build an API'},
-        'todo2': {'task': '?????'},
-        'todo3': {'task': 'profit!'},
-    }
-
-    def create(self, key, value):
-        pass
-
-    def read(self, key):
-        pass
-
-    def update(self, key, value):
-        pass
-
-    def delete(self, key):
-        pass

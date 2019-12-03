@@ -1,6 +1,6 @@
 
 from breadpan.usecase import IUsecaseOutputPort, IUsecaseInteractor, IDataAccessGateway
-from todo.entiry import ToDoEntity
+from todo.entity import ToDoEntity
 
 class TodoDataAccessWithMem(IDataAccessGateway):
 
@@ -22,7 +22,6 @@ class TodoDataAccessWithMem(IDataAccessGateway):
 
     def delete(self, todo_id):
         pass
-
 
 
 class ToDoOutputPort(IUsecaseOutputPort):
