@@ -7,7 +7,7 @@ class Presenter(UsecaseOutputPort):
     
     """
     def __init__(self, output_port: UsecaseOutputPort):
-        self.data = output_port.data
+        self.output = output_port.output
 
     @abstractmethod
     def ouput(self):

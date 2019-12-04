@@ -31,15 +31,11 @@ class UsecaseInputPort(object):
     """Interface of use case input port.
 
     """
-    data = {}
+    input = {}
 
-    def __init__(self):
-        self.data = {}
-
-    def input(self, **kwargs):
+    def __init__(self, **kwargs):
         for key, value in kwargs.items():
-            self.data[key] = value
-
+            self.input[key] = value
 
 
 class UsecaseInteractor(UsecaseInputPort):
@@ -58,9 +54,9 @@ class UsecaseOutputPort(metaclass=ABCMeta):
     """Interface of use case input port.
 
     """
-    data = {}
+    output = {}
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
-            self.data[key] = value
+            self.output[key] = value
     

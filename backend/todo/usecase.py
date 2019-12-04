@@ -38,8 +38,8 @@ class ToDoOutputPort(UsecaseOutputPort):
 class ToDoCreateInteractor(UsecaseInteractor):
     def run(self,  data: DataAccessGateway):        
         # Get id from the controller's data. 
-        todo_id = self.data["todo_id"]
-        contents = self.data["contents"]
+        todo_id = self.input["todo_id"]
+        contents = self.input["contents"]
         t = ToDoEntity(todo_id, contents['task'])
 
         # Store the data. 
@@ -51,8 +51,8 @@ class ToDoCreateInteractor(UsecaseInteractor):
 class ToDoUpdateInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):        
         # Get id from the controller's data. 
-        todo_id = self.data["todo_id"]
-        contents = self.data["contents"]
+        todo_id = self.input["todo_id"]
+        contents = self.input["contents"]
         t = ToDoEntity(todo_id, contents['task'])
 
         # Store the data. 
@@ -65,7 +65,7 @@ class ToDoUpdateInteractor(UsecaseInteractor):
 class ToDoReadInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):
         # Get task ID
-        todo_id = self.data["todo_id"]
+        todo_id = self.input["todo_id"]
 
         # Read data.
         t = data.read(todo_id)
@@ -81,6 +81,6 @@ class ToDoReadAllInteractor(UsecaseInteractor):
 class ToDoDeleteInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):
         # Get task ID
-        todo_id = self.data["todo_id"]
+        todo_id = self.input["todo_id"]
         data.delete(todo_id)
         return ToDoOutputPort()
