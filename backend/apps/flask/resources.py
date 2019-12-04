@@ -25,7 +25,7 @@ class FlaskTodoController(Resource):
 
     def get(self, todo_id):
         abort_if_todo_doesnt_exist(todo_id)
-        return todoCtrl.read(todo_id).data["todo"], HTTPStatus.OK
+        return todoCtrl.read(todo_id), HTTPStatus.OK
 
     def delete(self, todo_id):
         abort_if_todo_doesnt_exist(todo_id)
@@ -43,12 +43,12 @@ class FlaskTodoController(Resource):
 # shows a list of all todos, and lets you POST to add new tasks
 class FlaskTodoListController(Resource):
     def get(self):
-        return todoCtrl.read_all_data().data["todo"], HTTPStatus.OK
+        return todoCtrl.read_all_data(), HTTPStatus.OK
 
     def post(self):
         args = parser.parse_args()
-        all_data = todoCtrl.read_all_data().data["todo"]
-        todo_id = int(max(all_data.keys()).lstrip('todo')) + 1
+        all_data = todoCtrl.read_all_data()
+        todo_id = len(all_data) + 1
         todo_id = 'todo%i' % todo_id
         task = {'task': args['task']}
         todoCtrl.create(todo_id, task)
