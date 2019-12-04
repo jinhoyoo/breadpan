@@ -30,9 +30,8 @@ class TodoDataInMemory(DataAccessGateway):
 
 
 class ToDoOutputPort(UsecaseOutputPort):
-    def __init__(self, **kwargs):
-        super(ToDoOutputPort,self).__init__(**kwargs)
-        # To-Do: Do any operation additionally.
+    pass
+    # To-Do: Do any operation additionally.
 
 
 class ToDoCreateInteractor(UsecaseInteractor):
@@ -46,7 +45,7 @@ class ToDoCreateInteractor(UsecaseInteractor):
         data.create(t)
 
         # Link to output port
-        return ToDoOutputPort(todo=t)
+        return UsecaseOutputPort(todo=t)
 
 class ToDoUpdateInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):        
@@ -83,4 +82,4 @@ class ToDoDeleteInteractor(UsecaseInteractor):
         # Get task ID
         todo_id = self.input["todo_id"]
         data.delete(todo_id)
-        return ToDoOutputPort()
+        return UsecaseOutputPort()
