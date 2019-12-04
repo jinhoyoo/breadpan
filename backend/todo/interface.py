@@ -6,7 +6,7 @@ class ToDoPresenter(Presenter):
     
     Convert ToDoEntity to {todo.id : {'task': todo.task}} for RESTful response as view. 
     """
-    def ouput(self):
+    def show(self):
         todo_entry = self.output['todo']
         return { todo_entry.todo_id : {'task':todo_entry.task}  }
 
@@ -15,7 +15,7 @@ class ToDosPresenter(Presenter):
     
     Convert list of ToDoEntity to the list of {todo.id : {'task': todo.task}} for RESTful response as view. 
     """
-    def ouput(self):
+    def show(self):
         todo_entry_list = self.output['todo']
         new_list = [ { x.todo_id : {'task':x.task} } for x in todo_entry_list ]
         return new_list
@@ -29,20 +29,20 @@ class ToDoController(Controller):
 
     def create(self, todo_id, contents):
         i = ToDoCreateInteractor(todo_id=todo_id, contents=contents)
-        return ToDoPresenter(i.run(self.__data)).ouput()
+        return ToDoPresenter(i.run(self.__data)).show()
 
     def read(self, todo_id):
         i = ToDoReadInteractor(todo_id=todo_id)
-        return ToDoPresenter(i.run(self.__data)).ouput()
+        return ToDoPresenter(i.run(self.__data)).show()
 
     def read_all_data(self):
         i = ToDoReadAllInteractor()
-        return ToDosPresenter(i.run(self.__data)).ouput()
+        return ToDosPresenter(i.run(self.__data)).show()
 
     def delete(self, todo_id):
         i = ToDoDeleteInteractor(todo_id=todo_id)
-        return ToDoPresenter(i.run(self.__data)).ouput()
+        return ToDoPresenter(i.run(self.__data)).show()
 
     def update(self, todo_id, contents):
         i = ToDoUpdateInteractor(todo_id=todo_id, contents=contents)
-        return ToDoPresenter(i.run(self.__data)).ouput()
+        return ToDoPresenter(i.run(self.__data)).show()

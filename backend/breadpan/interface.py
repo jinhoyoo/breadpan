@@ -9,9 +9,8 @@ class Presenter(UsecaseOutputPort):
     def __init__(self, output_port: UsecaseOutputPort):
         self.output = output_port.output
 
-    @abstractmethod
-    def ouput(self):
-        """output
+    def show(self):
+        """show
         Do any operation additionally.
         """
         pass
