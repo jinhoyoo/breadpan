@@ -4,7 +4,9 @@ from todo.entity import ToDoEntity
 
 
 class TodoDataInMemory(IDataAccessGateway):
-
+    """ TodoDataInMemory
+    Store ToDoEntity as {key, value}:=>{todo_id, task}.
+    """
     def __init__(self):
         self.TODOS = {}
 
@@ -73,7 +75,6 @@ class ToDoReadInteractor(IUsecaseInteractor):
 
 class ToDoReadAllInteractor(IUsecaseInteractor):
     def run(self, data: IDataAccessGateway):
-        # Link to output port
         return ToDoOutputPort(todo=data.read_all())
 
 
@@ -81,5 +82,5 @@ class ToDoDeleteInteractor(IUsecaseInteractor):
     def run(self, data: IDataAccessGateway):
         # Get task ID
         todo_id = self.data["todo_id"]
-        del TODOS[todo_id]
+        data.delete(todo_id)
         return ToDoOutputPort()
