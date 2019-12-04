@@ -18,7 +18,7 @@ class TodoDataInMemory(IDataAccessGateway):
         return ToDoEntity(todo_id, self.TODOS[todo_id])
 
     def read_all(self):
-        return [ ToDoEntity(x.todo_id, x.task) for x in self.TODOS ]
+        return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
 
     def update(self, entity: ToDoEntity, **kwargs):
         self.TODOS[entity.todo_id] = entity.task
@@ -40,7 +40,7 @@ class ToDoCreateInteractor(IUsecaseInteractor):
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
-        t = ToDoEntity(todo_id, contents)
+        t = ToDoEntity(todo_id, contents['task'])
 
         # Store the data. 
         data.create(t)
@@ -53,7 +53,7 @@ class ToDoUpdateInteractor(IUsecaseInteractor):
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
-        t = ToDoEntity(todo_id, contents)
+        t = ToDoEntity(todo_id, contents['task'])
 
         # Store the data. 
         data.update(t)

@@ -8,6 +8,9 @@ class TestTodoApp(unittest.TestCase):
 
     def setUp(self):
         self.todo_ctrl = todo.ToDoController()
+        self.todo_ctrl.create('todo1', {'task':'build an API'} )
+        self.todo_ctrl.create('todo2', {'task':'build a server'} )
+        self.todo_ctrl.create('todo3', {'task':'build a client'} )
 
     def tearDown(self):
         del self.todo_ctrl
