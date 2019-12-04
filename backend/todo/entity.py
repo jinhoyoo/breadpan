@@ -1,6 +1,6 @@
-from breadpan.entity import IEntity
+from breadpan.entity import Entity
 
-class ToDoEntity(IEntity):
+class ToDoEntity(Entity):
     def __init__(self, todo_id, task):
         self.todo_id = todo_id
         self.task = task

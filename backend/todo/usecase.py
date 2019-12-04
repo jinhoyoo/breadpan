@@ -1,9 +1,9 @@
 
-from breadpan.usecase import IDataAccessGateway, IUsecaseInteractor,IUsecaseOutputPort
+from breadpan.usecase import DataAccessGateway, UsecaseInteractor,UsecaseOutputPort
 from todo.entity import ToDoEntity
 
 
-class TodoDataInMemory(IDataAccessGateway):
+class TodoDataInMemory(DataAccessGateway):
     """ TodoDataInMemory
     Store ToDoEntity as {key, value}:=>{todo_id, task}.
     """
@@ -29,14 +29,14 @@ class TodoDataInMemory(IDataAccessGateway):
         return
 
 
-class ToDoOutputPort(IUsecaseOutputPort):
+class ToDoOutputPort(UsecaseOutputPort):
     def __init__(self, **kwargs):
         super(ToDoOutputPort,self).__init__(**kwargs)
         # To-Do: Do any operation additionally.
 
 
-class ToDoCreateInteractor(IUsecaseInteractor):
-    def run(self,  data: IDataAccessGateway):        
+class ToDoCreateInteractor(UsecaseInteractor):
+    def run(self,  data: DataAccessGateway):        
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
@@ -48,8 +48,8 @@ class ToDoCreateInteractor(IUsecaseInteractor):
         # Link to output port
         return ToDoOutputPort(todo=t)
 
-class ToDoUpdateInteractor(IUsecaseInteractor):
-    def run(self, data: IDataAccessGateway):        
+class ToDoUpdateInteractor(UsecaseInteractor):
+    def run(self, data: DataAccessGateway):        
         # Get id from the controller's data. 
         todo_id = self.data["todo_id"]
         contents = self.data["contents"]
@@ -62,8 +62,8 @@ class ToDoUpdateInteractor(IUsecaseInteractor):
         return ToDoOutputPort(todo=t)
 
 
-class ToDoReadInteractor(IUsecaseInteractor):
-    def run(self, data: IDataAccessGateway):
+class ToDoReadInteractor(UsecaseInteractor):
+    def run(self, data: DataAccessGateway):
         # Get task ID
         todo_id = self.data["todo_id"]
 
@@ -73,13 +73,13 @@ class ToDoReadInteractor(IUsecaseInteractor):
         return ToDoOutputPort(todo=t)
 
 
-class ToDoReadAllInteractor(IUsecaseInteractor):
-    def run(self, data: IDataAccessGateway):
+class ToDoReadAllInteractor(UsecaseInteractor):
+    def run(self, data: DataAccessGateway):
         return ToDoOutputPort(todo=data.read_all())
 
 
-class ToDoDeleteInteractor(IUsecaseInteractor):
-    def run(self, data: IDataAccessGateway):
+class ToDoDeleteInteractor(UsecaseInteractor):
+    def run(self, data: DataAccessGateway):
         # Get task ID
         todo_id = self.data["todo_id"]
         data.delete(todo_id)

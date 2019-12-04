@@ -1,12 +1,12 @@
 from abc import *
-from breadpan.entity import IEntity
+from breadpan.entity import Entity
 
-class IDataAccessGateway(metaclass=ABCMeta):
+class DataAccessGateway(metaclass=ABCMeta):
     """Interface of data access class. 
     """
         
     @abstractmethod
-    def create(self, entity: IEntity):
+    def create(self, entity: Entity):
         pass
 
     @abstractmethod
@@ -27,7 +27,7 @@ class IDataAccessGateway(metaclass=ABCMeta):
 
 
 
-class IUsecaseInputPort(object):
+class UsecaseInputPort(object):
     """Interface of use case input port.
 
     """
@@ -42,19 +42,19 @@ class IUsecaseInputPort(object):
 
 
 
-class IUsecaseInteractor(IUsecaseInputPort):
+class UsecaseInteractor(UsecaseInputPort):
     """IUsecaseInteractor
 
     """
     @abstractmethod
-    def run(self, data: IDataAccessGateway):
+    def run(self, data: DataAccessGateway):
         """operate
-        Will return the class inherited from IUsecaseOutputPort.
+        Will return the class inherited from UsecaseOutputPort.
         """
         pass
 
 
-class IUsecaseOutputPort(metaclass=ABCMeta):
+class UsecaseOutputPort(metaclass=ABCMeta):
     """Interface of use case input port.
 
     """
@@ -64,6 +64,3 @@ class IUsecaseOutputPort(metaclass=ABCMeta):
         for key, value in kwargs.items():
             self.data[key] = value
     
-
-
-

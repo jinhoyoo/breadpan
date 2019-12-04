@@ -1,4 +1,4 @@
 ###
 
-class IEntity(object):
+class Entity(object):
     pass

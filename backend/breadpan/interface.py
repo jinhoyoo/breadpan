@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
-from breadpan.usecase import IUsecaseOutputPort
-from breadpan.entity import IEntity
+from breadpan.usecase import UsecaseOutputPort
+from breadpan.entity import Entity
 
-class IPresenter(IUsecaseOutputPort):
+class Presenter(UsecaseOutputPort):
     """IPresenter 
     
     """
-    def __init__(self, output_port: IUsecaseOutputPort):
+    def __init__(self, output_port: UsecaseOutputPort):
         self.data = output_port.data
 
     @abstractmethod
@@ -18,24 +18,24 @@ class IPresenter(IUsecaseOutputPort):
     
 
 
-class IController(metaclass=ABCMeta):
+class Controller(metaclass=ABCMeta):
     """Interface of data controller class.
 
     """
 
     @abstractmethod
-    def create(self, **kwargs) -> IPresenter:
+    def create(self, **kwargs) -> Presenter:
         pass
 
     @abstractmethod
-    def read(self,  **kwargs) -> IPresenter:
+    def read(self,  **kwargs) -> Presenter:
         pass
 
     @abstractmethod
-    def update(self,  **kwargs) -> IPresenter:
+    def update(self,  **kwargs) -> Presenter:
         pass
 
     @abstractmethod
-    def delete(self,  **kwargs) -> IPresenter:
+    def delete(self,  **kwargs) -> Presenter:
         pass
 

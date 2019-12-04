@@ -1,7 +1,7 @@
-from breadpan.interface import IController, IPresenter
+from breadpan.interface import Controller, Presenter
 from todo.usecase import TodoDataInMemory, ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
 
-class ToDoPresenter(IPresenter):
+class ToDoPresenter(Presenter):
     """ToDoPresenter
     
     Convert ToDoEntity to {todo.id : {'task': todo.task}} for RESTful response as view. 
@@ -10,7 +10,7 @@ class ToDoPresenter(IPresenter):
         todo_entry = self.data['todo']
         return { todo_entry.todo_id : {'task':todo_entry.task}  }
 
-class ToDosPresenter(IPresenter):
+class ToDosPresenter(Presenter):
     """ToDosPresenter
     
     Convert list of ToDoEntity to the list of {todo.id : {'task': todo.task}} for RESTful response as view. 
@@ -22,7 +22,7 @@ class ToDosPresenter(IPresenter):
          
 
 
-class ToDoController(IController):
+class ToDoController(Controller):
 
     def __init__(self):
         self.__data = TodoDataInMemory() # Use memory DB.
