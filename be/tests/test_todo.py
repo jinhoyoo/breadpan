@@ -19,13 +19,11 @@ class TestTodoApp(unittest.TestCase):
         todo_id = "task312"
         contents = {'task': 'myid'}
         output = self.todo_ctrl.create(todo_id, contents)
-        t = output
-        self.assertEqual(t ,{todo_id:contents} )
+        self.assertEqual(output ,{todo_id:contents} )
 
     def test_read(self):        
         output = self.todo_ctrl.read(todo_id='todo1')
-        t = output
-        self.assertEqual(t,  {'todo1': {'task': 'build an API'} } )
+        self.assertEqual(output,  {'todo1': {'task': 'build an API'} } )
 
 
     def test_read_all(self):        
@@ -39,15 +37,14 @@ class TestTodoApp(unittest.TestCase):
         new_contents = {'task': 'read the books'}
         self.todo_ctrl.update(todo_id, new_contents)    
 
-        output = self.todo_ctrl.read(todo_id)
-        t = output
+        t = self.todo_ctrl.read(todo_id)
         self.assertEqual(t[todo_id]['task'] ,'read the books' )
 
 
     def test_delete(self):
         self.todo_ctrl.delete(todo_id='todo2')
         try:
-            output = self.todo_ctrl.read(todo_id='todo2')
+            self.todo_ctrl.read(todo_id='todo2')
         except:
             self.assertTrue(True)
 
