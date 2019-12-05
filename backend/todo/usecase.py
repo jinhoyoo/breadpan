@@ -29,11 +29,6 @@ class TodoDataInMemory(DataAccessGateway):
         return
 
 
-class ToDoOutputPort(UsecaseOutputPort):
-    pass
-    # To-Do: Do any operation additionally.
-
-
 class ToDoCreateInteractor(UsecaseInteractor):
     def run(self,  data: DataAccessGateway):        
         # Get id from the controller's data. 
@@ -58,7 +53,7 @@ class ToDoUpdateInteractor(UsecaseInteractor):
         data.update(t)
 
         # Link to output port
-        return ToDoOutputPort(todo=t)
+        return UsecaseOutputPort(todo=t)
 
 
 class ToDoReadInteractor(UsecaseInteractor):
@@ -69,12 +64,12 @@ class ToDoReadInteractor(UsecaseInteractor):
         # Read data.
         t = data.read(todo_id)
 
-        return ToDoOutputPort(todo=t)
+        return UsecaseOutputPort(todo=t)
 
 
 class ToDoReadAllInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):
-        return ToDoOutputPort(todo=data.read_all())
+        return UsecaseOutputPort(todo=data.read_all())
 
 
 class ToDoDeleteInteractor(UsecaseInteractor):
