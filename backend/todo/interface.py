@@ -1,5 +1,33 @@
 from breadpan.interface import Controller, Presenter
-from todo.usecase import TodoDataInMemory, ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
+from todo.entity import ToDoEntity
+from todo.usecase import DataAccessGateway, ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
+
+
+class TodoDataInMemory(DataAccessGateway):
+    """ TodoDataInMemory
+    Store ToDoEntity as {key, value}:=>{todo_id, task}.
+    """
+    def __init__(self):
+        self.TODOS = {}
+
+    def create(self, entity: ToDoEntity):
+        self.TODOS[entity.todo_id] = entity.task
+        return
+
+    def read(self,  todo_id) -> ToDoEntity:
+        return ToDoEntity(todo_id, self.TODOS[todo_id])
+
+    def read_all(self):
+        return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
+
+    def update(self, entity: ToDoEntity, **kwargs):
+        self.TODOS[entity.todo_id] = entity.task
+        return
+
+    def delete(self, todo_id):
+        del self.TODOS[todo_id]
+        return
+
 
 class ToDoPresenter(Presenter):
     """ToDoPresenter

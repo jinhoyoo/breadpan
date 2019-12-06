@@ -3,31 +3,6 @@ from breadpan.usecase import DataAccessGateway, UsecaseInteractor,UsecaseOutputP
 from todo.entity import ToDoEntity
 
 
-class TodoDataInMemory(DataAccessGateway):
-    """ TodoDataInMemory
-    Store ToDoEntity as {key, value}:=>{todo_id, task}.
-    """
-    def __init__(self):
-        self.TODOS = {}
-
-    def create(self, entity: ToDoEntity):
-        self.TODOS[entity.todo_id] = entity.task
-        return
-
-    def read(self,  todo_id) -> ToDoEntity:
-        return ToDoEntity(todo_id, self.TODOS[todo_id])
-
-    def read_all(self):
-        return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
-
-    def update(self, entity: ToDoEntity, **kwargs):
-        self.TODOS[entity.todo_id] = entity.task
-        return
-
-    def delete(self, todo_id):
-        del self.TODOS[todo_id]
-        return
-
 
 class ToDoCreateInteractor(UsecaseInteractor):
     def run(self,  data: DataAccessGateway):        
