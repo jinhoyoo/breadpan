@@ -60,8 +60,8 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 
 ### Entity
 
- Entity는 기본적인 업무규칙과 객체들에 대해 담는다. ToDo를 관리하는 시스템이기에 아래와 ```Entity```를 상속해서 만들 수 있다. 현재는 다른 할 일이 없어서지만, 여기에 이 Entity를 가지고 무언가 동작해야 하는 것들을 추가할 수도 있다. 이 Entity는 DataAccessGateway를 통해 그 데이터를 관리하게 된다. 
-
+ Entity는 기본적인 업무규칙과 객체들에 대해 담는다. 예를 들어 ToDo를 관리하는 시스템을 만든다면 아래처럼 ```Entity```를 상속해서 만들 수 있다. 여기에 이 Entity를 가지고 무언가 동작해야 하는 것들을 추가할 수도 있다. 
+ 
 ```python
 from breadpan.entity import Entity
 
