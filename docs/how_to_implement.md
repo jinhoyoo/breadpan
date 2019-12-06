@@ -206,7 +206,7 @@ class ToDoPresenter(Presenter):
 
 ![PlantUML model](http://www.plantuml.com/plantuml/png/RP11pe8m48NtFSKa_nfEG0X_91eN9Ywum5X6OomTCXrZ27ftGGqqOdVzEk_rpIk2ekYrSSQqQ2zu8b2kEJrx9JcY9SYojM13UGuz681gU2rHSUjtrB1qaDsJ14RoRos5i46b6tR3v448wnRzx9NkXGADjxUguf9dz5koOg_2piMQcHdu0f3aYuYVeUZpXSrZMZ_EiApWhtoTtW1OXo70P3gHACjeMv2lXtgV) 
 
-[//]: # ( ```plantuml                                                                       
+[//]: # ( ```plantuml                                          )                        
 [//]: # ( @startuml                                            )                                     
 [//]: # (                                                      )             
 [//]: # ( package todo.interface <<Frame>> {                   )                                            
