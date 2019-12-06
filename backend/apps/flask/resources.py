@@ -48,8 +48,10 @@ class FlaskTodoListController(Resource):
     def post(self):
         args = parser.parse_args()
         all_data = todoCtrl.read_all_data()
+        
         todo_id = len(all_data) + 1
         todo_id = 'todo%i' % todo_id
         task = {'task': args['task']}
-        todoCtrl.create(todo_id, task)
-        return task, HTTPStatus.CREATED
+        
+        t = todoCtrl.create(todo_id, task)
+        return t, HTTPStatus.CREATED

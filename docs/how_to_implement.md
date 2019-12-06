@@ -39,10 +39,10 @@ package breadpan.entity <<Frame>> {
 package breadpan.usecase <<Frame>> {
 
     UsecaseInputPort <-- Entity
-    UsecaseInputPort <|.. UsecaseInteractor
+    UsecaseInputPort <|-- UsecaseInteractor
     UsecaseInteractor --> UsecaseOutputPort
     UsecaseInteractor <-- DataAccessGateway
-    DataAccessGateway <|.. YourOwnDatabases
+    DataAccessGateway <|-- YourOwnDatabases
 
 }
 
@@ -92,7 +92,7 @@ package breadpan.entity <<Frame>> #DDDDDD {
 }
 
 package todo.entity <<Frame>> {
-    breadpan.entity.Entity <|.. TodoEntity
+    breadpan.entity.Entity <|-- TodoEntity
 }
 
 @enduml
@@ -117,7 +117,7 @@ class ToDoCreateInteractor(UsecaseInteractor):
         data.create(t)
 
         # Link to output port
-        return UsecaseOutputPort(todo=t)
+        return UsecaseOutputPort(todo=t) #Expose the data 't' with 'todo' as key.
 ```
 
 이렇게 구현한 `ToDoCreateInteractor`는 아래처럼 Constructor에 key/value argument로 원하는 데이터를 집어넣는다. 그 다음 `run()`을 실행한다.   
@@ -151,22 +151,76 @@ package breadpan.usecase <<Frame>> #DDDDDD{
 
 ### Interface
  
- 실제적으로 
+ 실제적으로 외부 프레임워크나 데이터베이스와 연결이 되는 부분들을 구현하는 부분이다. 
+ 
+ Controller의 경우, 외부 프레임워크에 직접 붙어서 운영이 되는 모듈이다. 예를 들어, ToDoController의 구현은 아래와 같다. 
 
+```python
+class ToDoController(Controller):
+
+    def __init__(self):
+        self.__data = TodoDataInMemory() # Memory를 이용하게 구현한 DB 모듈.
+
+    def create(self, todo_id, contents):
+        i = ToDoCreateInteractor(todo_id=todo_id, contents=contents)
+        return ToDoPresenter(i.run(self.__data)).show()
+    ......
+```
+실제 이를 가지고 Flask에 연결해서 사용한다면, 이렇게 쓰이게 된다. 
+
+```python
+class FlaskTodoListController(Resource):
+
+    def post(self):
+        args = parser.parse_args()
+        all_data = todoCtrl.read_all_data()
+
+        todo_id = len(all_data) + 1
+        todo_id = 'todo%i' % todo_id
+        task = {'task': args['task']} 
+
+        todoCtrl.create(todo_id, task)
+        return task, HTTPStatus.CREATED
+.......
+
+api.add_resource(FlaskTodoController, '/todos/<todo_id>')
+```
+
+여기서 `ToDoPresenter`의 역할은 내부의 `ToDoEntity`로 정의된 데이터를 RESTful에서 내보내기 위한 데이터 형식으로 바꿔준다. 이러한 구조가 필요한 이유는 내부 구현은 문제가 없으나 외부의 인터페이스를 맞춰주어야 하는 경우 때문이다. 아래 코드에서 처럼 `Presenter`를 상속받고 `show()`함수를 구현해주면 된다. 
+
+``` python
+class ToDoPresenter(Presenter):
+    """ToDoPresenter
+    
+    Convert ToDoEntity to {todo.id : {'task': todo.task}} for RESTful response as view. 
+    """
+    def show(self):
+        todo_entry = self.output['todo'] # Take the data with key 'todo' TodoController exposed.
+        return { todo_entry.todo_id : {'task':todo_entry.task}  }
+```
+
+현재의 interface계층의 구조는 아래와 같다. 
 ```plantuml
 @startuml
 
 package todo.interface <<Frame>> { 
-  TodoDataInMemory <|.. DataAccessGateway
-  breadpan.interface.Presenter <|.. ToDoPresenter 
-  breadpan.interface.Presenter <|.. ToDosPresenter
-  breadpan.interface.Controller <|.. ToDoController
+  TodoDataInMemory <|-- DataAccessGateway
+  breadpan.interface.Presenter <|-- ToDoPresenter 
+  breadpan.interface.Controller <|-- ToDoController
+  ToDoController -> TodoDataInMemory
+  ToDoPresenter <- ToDoController
 }
 
 package breadpan.interface <<Frame>> #DDDDDD{
   class Presenter
-  class Controller
+  class Controller 
 }
 
 @enduml
 ```
+
+### View에 대한 구현 
+To-Do:
+
+
+## 요약
