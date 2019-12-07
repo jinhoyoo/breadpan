@@ -7,7 +7,7 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 -----
 
 현재 추천하는 방법은 아래와 같다. 
-1. Clean architecture의 개념에 따라 각 Package들의 기본 Class구조를 상속받아서 자신만의 Entity, Usecase, Controller, Presenter를 구현한다. 
+1. 각 Package들의 기본 Class구조를 상속받아서 자신만의 Entity, Usecase, Controller, Presenter를 구현한다. 
 2. 1.에 대한 Test code를 작성한다. 
 3. 2.에 기반해서 이를 다양한 응용 프로그램으로 만든다. ex)RESTful API server.
     - View에 보여줄 ViewModel까지 만드는게 Back-end가 할 일이다. 
@@ -27,14 +27,14 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 
 ![PlantUML model](http://www.plantuml.com/plantuml/png/TP3DJWCX4CVlF0Kl04_Ga1e_ZAVsui7Zb8wcaONDp92cKTzTS34RXUvjV_FdDnzR5Y39Kr0-0BD-IPbsvtW70WTWv8Rh_uttoFm8WcUuA3M3VuStr0T2ECuGBKOvoKLlDWy44pgdFvGkttt3nWmiNmDFPlJ0-4VqOtfU2aznph9F9DNPz5VgdyQiL930IwAQxQasnltINPQc66V7ozHiJvSXkhCEDp_L3g_WyTyHzuICjLParWwdl4rHA8LGCiPrjxJT2jsJjKSPROlncAVm3G00?switch)
 
-[//]: # ( ```plantuml                                         )
-[//]: # ( @startuml                                           )
-[//]: # ( class YourOwnDatabases                              )
-[//]: # ( class DataAccessGateway                             ) 
-[//]: # ( package breadpan.entity <<Frame>> {                 )  
-[//]: # (     Entity <-- DataAccessGateway                    ) 
-[//]: # ( }                                                   )
-[//]: # (                                                     )  
+[//]: # ( ```plantuml                                          )
+[//]: # ( @startuml                                            )
+[//]: # ( class YourOwnDatabases                               )
+[//]: # ( class DataAccessGateway                              ) 
+[//]: # ( package breadpan.entity <<Frame>> {                  )  
+[//]: # (     Entity <-- DataAccessGateway                     ) 
+[//]: # ( }                                                    )
+[//]: # (                                                      )  
 [//]: # ( package breadpan.usecase <<Frame>> {                 )
 [//]: # (                                                      )
 [//]: # (     UsecaseInputPort <-- Entity                      )
@@ -114,6 +114,7 @@ class ToDoCreateInteractor(UsecaseInteractor):
 
         # Store the data. 
         data.create(t)
+
 
         # Link to output port
         return UsecaseOutputPort(todo=t) #Expose the data 't' with 'todo' as key.
