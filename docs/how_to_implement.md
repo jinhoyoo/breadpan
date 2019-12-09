@@ -25,7 +25,7 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 * ```interface```
     - 외부의 다른 구현들과 연결 (예: 웹)하는데 있어서 필요한 작업 처리  
 
-![PlantUML model](http://www.plantuml.com/plantuml/png/TP3DJWCX4CVlF0Kl04_Ga1e_ZAVsui7Zb8wcaONDp92cKTzTS34RXUvjV_FdDnzR5Y39Kr0-0BD-IPbsvtW70WTWv8Rh_uttoFm8WcUuA3M3VuStr0T2ECuGBKOvoKLlDWy44pgdFvGkttt3nWmiNmDFPlJ0-4VqOtfU2aznph9F9DNPz5VgdyQiL930IwAQxQasnltINPQc66V7ozHiJvSXkhCEDp_L3g_WyTyHzuICjLParWwdl4rHA8LGCiPrjxJT2jsJjKSPROlncAVm3G00?switch)
+![PlantUML model](http://www.plantuml.com/plantuml/png/TP1BJiGm38RtEKKka3d1A1h40x6QsR1WwQO6LQH9PJkgAk3kD3IeWcIww-S_dnyd5Y19erVE0xD-YOdESxW3WGuOkU3yV-CSCZ-2u0oBKXEuTtX3tH52Fq4uO9115dqyFX2CQAt-K7hzxWisfc7vQdWIemF6Fw8Vq_DMU0fJaaiaoSwYlrB_D6QdWWHE8kLiJRKnzfUUanH5EzjU9cThkWrHdRMv-P0xl8B3VqUy43BcsYPhJNaRWr3qViqOMztoKArGFTbxhAETCFHfzDy0)
 
 [//]: # ( ```plantuml                                          )
 [//]: # ( @startuml                                            )
@@ -44,13 +44,13 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 [//]: # (     DataAccessGateway <|-- YourOwnDatabases          )
 [//]: # (                                                      )
 [//]: # ( }                                                    )
-[//]: # ( package breadpan.interface <<Frame>> {                )
-[//]: # (   Presenter <|.. UsecaseOutputPort                     )
-[//]: # (   Controller -> breadpan.usecase.UsecaseInteractor    )
-[//]: # (   Controller -> Presenter                             )
-[//]: # ( }                                                     ) 
-[//]: # ( @enduml                                               )
-[//]: # ( ```                                                   ) 
+[//]: # ( package breadpan.interface <<Frame>> {               )
+[//]: # (   Presenter <|-- UsecaseOutputPort                   )
+[//]: # (   Controller -> breadpan.usecase.UsecaseInteractor   )
+[//]: # (   Controller -> Presenter                            )
+[//]: # ( }                                                    ) 
+[//]: # ( @enduml                                              )
+[//]: # ( ```                                                  ) 
 
 예제로 설명하기
 ---------
