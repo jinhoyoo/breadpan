@@ -148,6 +148,10 @@ class ToDoController(Controller):
 실제 이를 가지고 Flask에 연결해서 사용한다면, 이렇게 쓰이게 된다.
 
 ```python
+
+import todo
+todoCtrl = todo.ToDoController()
+
 class FlaskTodoListController(Resource):
 
     def post(self):
@@ -160,6 +164,7 @@ class FlaskTodoListController(Resource):
 
         todoCtrl.create(todo_id, task)
         return task, HTTPStatus.CREATED
+
 .......
 
 api.add_resource(FlaskTodoController, '/todos/<todo_id>')
