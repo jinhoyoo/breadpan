@@ -178,6 +178,9 @@ api.add_resource(FlaskTodoController, '/todos/<todo_id>')
 
 Front-end의 경우에는 [Google optimize](https://optimize.google.com/)와 같은 A/B test 도구들을 지원해서 더 다양한 Business운영의 실험을 할 수 있게 하기를 권한다.
 
+#### 자세한 내용
+ [구현하는 방법](docs/how_to_implement.md)을 참조하기 바란다. 
+
 
 Folder structure
 -------
