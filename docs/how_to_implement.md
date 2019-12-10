@@ -25,32 +25,35 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 * ```interface```
     - 외부의 다른 구현들과 연결 (예: 웹)하는데 있어서 필요한 작업 처리  
 
-![PlantUML model](http://www.plantuml.com/plantuml/png/TP3DJWCX4CVlF0Kl04_Ga1e_ZAVsui7Zb8wcaONDp92cKTzTS34RXUvjV_FdDnzR5Y39Kr0-0BD-IPbsvtW70WTWv8Rh_uttoFm8WcUuA3M3VuStr0T2ECuGBKOvoKLlDWy44pgdFvGkttt3nWmiNmDFPlJ0-4VqOtfU2aznph9F9DNPz5VgdyQiL930IwAQxQasnltINPQc66V7ozHiJvSXkhCEDp_L3g_WyTyHzuICjLParWwdl4rHA8LGCiPrjxJT2jsJjKSPROlncAVm3G00?switch)
+![PlantUML model](http://www.plantuml.com/plantuml/svg/TP3FJiCm3CRlVGgVaUOdgA8X_Y1EsuK3HoypQ29DAjlHD37UdMKfgg2Xj_xywHT_NgkHM1v2vmEfmclAiZd6UpBQaR9EkFpVUi-gJsHyf5FNZUG_w9rX9qpxaI9oj8ETeEyVXGPs3Zuxk7mF5IEwXkMhuSdAdfH_YQwcbpfuZcEsRHA37d7I_pC_8yxKMCXRaf9TKbYjRdxe9jkaQ6VRPKfsIUiIYxCscn_A2s_a-SyHjyBAPGQ8PzVSyYv5anJ2DUDQfUT8xJfBBxkiEUxp4Bu1)
 
-[//]: # ( ```plantuml                                          )
-[//]: # ( @startuml                                            )
-[//]: # ( class YourOwnDatabases                               )
-[//]: # ( class DataAccessGateway                              ) 
-[//]: # ( package breadpan.entity <<Frame>> {                  )  
-[//]: # (     Entity <-- DataAccessGateway                     ) 
-[//]: # ( }                                                    )
-[//]: # (                                                      )  
-[//]: # ( package breadpan.usecase <<Frame>> {                 )
+
+[//]: # ( ```plantuml                                          )      
+[//]: # (@startuml                                             )    
+[//]: # (class YourOwnDatabases                                )        
+[//]: # (class DataAccessGateway                               )    
+[//]: # (                                                      )                
+[//]: # (package breadpan.entity <<Frame>> {                   )            
+[//]: # (    Entity ..> DataAccessGateway                      )        
+[//]: # (}                                                     )    
+[//]: # (                                                      )        
+[//]: # (package breadpan.usecase <<Frame>> {                  )
+[//]: # (                                                      )        
+[//]: # (    UsecaseInputPort <.. Entity                       )        
+[//]: # (    UsecaseInputPort <|.. UsecaseInteractor           )    
+[//]: # (    UsecaseInteractor --* UsecaseOutputPort           )
+[//]: # (    UsecaseInteractor ..> DataAccessGateway           )
+[//]: # (    DataAccessGateway <|.. YourOwnDatabases           )                     
 [//]: # (                                                      )
-[//]: # (     UsecaseInputPort <-- Entity                      )
-[//]: # (     UsecaseInputPort <|-- UsecaseInteractor          )
-[//]: # (     UsecaseInteractor --> UsecaseOutputPort          )
-[//]: # (     UsecaseInteractor <-- DataAccessGateway          )
-[//]: # (     DataAccessGateway <|-- YourOwnDatabases          )
+[//]: # (}                                                     )
 [//]: # (                                                      )
-[//]: # ( }                                                    )
-[//]: # ( package breadpan.interface <<Frame>> {                )
-[//]: # (   Presenter <|.. UsecaseOutputPort                     )
-[//]: # (   Controller -> breadpan.usecase.UsecaseInteractor    )
-[//]: # (   Controller -> Presenter                             )
-[//]: # ( }                                                     ) 
-[//]: # ( @enduml                                               )
-[//]: # ( ```                                                   ) 
+[//]: # (package breadpan.interface <<Frame>> {                )
+[//]: # (  Presenter ..|> UsecaseOutputPort                    )
+[//]: # (  Controller ..> UsecaseInteractor                    )
+[//]: # (  Controller --* Presenter                            )
+[//]: # (}                                                     )
+[//]: # (@enduml                                               )
+[//]: # ( ```plantuml                                          )    
 
 예제로 설명하기
 ---------
@@ -79,7 +82,7 @@ class ToDoEntity(Entity):
         self.task = task
 ```
 
-![PlantUML model](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuU8gI4pEJanFLKWgIarCAKZCqqlDAyaigLImiN4hIinDjRDJK7O10uLgBWKWG5EdvmfLhgkhu99OakYOd9nQNEoUM99QdbZ9LOimloG_9H_3R09crW0D3G7g0_F1fZcavgK0dGq0) 
+![PlantUML model](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuU8gI4pEJanFLKWgIarCAKZCqqlDAyaigLImiN4hIinDjRDJK7O10uLgBWKWG5EdvmfLhgkhu99OakYOd9nQNEoUM99QdbZ9LOimloG_9H_3R09crW0D3G7g0_F1fZcavgK0dGq0) 
 
 [//]: # ( ```plantuml                                          )
 [//]: # ( @startuml                                            )
@@ -133,7 +136,7 @@ interactor.run(data)  # ToDoCreateInteractor의 run()실행.
 이러한 관계들을 정리해보면, 아래와 같은 관계가 된다. 
 
 
-![PlantUML model](http://www.plantuml.com/plantuml/png/XP512i8m44NtEKN0dP2Ue9IAHUb2T54FCAQZY6rIaWbIrBkRDfOkAkriGiBxVp9_KajWoDKLQq0-u8QSTAaZPr62HHx7EmCr9Wb_CUuh0uADb6Zj7WYVqFBuBKJGt1MXkOB4gF3NZipL0MjjsbvQw4nl3G9Xte4WIPkWllZNiW4rT8tEuHovpc0PMxHh79sqeLcte_jHV2t4tq_FJECLauJOXmtPZasd-QwolaBCiW9h-NG-xvMYAlswlW00) 
+![PlantUML model](http://www.plantuml.com/plantuml/svg/XP512i8m44NtEKN0dP2Ue9IAHUb2T54FCAQZY6rIaWbIrBkRDfOkAkriGiBxVp9_KajWoDKLQq0-u8QSTAaZPr62HHx7EmCr9Wb_CUuh0uADb6Zj7WYVqFBuBKJGt1MXkOB4gF3NZipL0MjjsbvQw4nl3G9Xte4WIPkWllZNiW4rT8tEuHovpc0PMxHh79sqeLcte_jHV2t4tq_FJECLauJOXmtPZasd-QwolaBCiW9h-NG-xvMYAlswlW00) 
 
 [//]: # ( ```plantuml                                                                       )
 [//]: # ( @startuml                                                                         )
@@ -205,7 +208,7 @@ class ToDoPresenter(Presenter):
 
 현재의 interface계층의 구조는 아래와 같다. 
 
-![PlantUML model](http://www.plantuml.com/plantuml/png/RP11pe8m48NtFSKa_nfEG0X_91eN9Ywum5X6OomTCXrZ27ftGGqqOdVzEk_rpIk2ekYrSSQqQ2zu8b2kEJrx9JcY9SYojM13UGuz681gU2rHSUjtrB1qaDsJ14RoRos5i46b6tR3v448wnRzx9NkXGADjxUguf9dz5koOg_2piMQcHdu0f3aYuYVeUZpXSrZMZ_EiApWhtoTtW1OXo70P3gHACjeMv2lXtgV) 
+![PlantUML model](http://www.plantuml.com/plantuml/svg/RP11pe8m48NtFSKa_nfEG0X_91eN9Ywum5X6OomTCXrZ27ftGGqqOdVzEk_rpIk2ekYrSSQqQ2zu8b2kEJrx9JcY9SYojM13UGuz681gU2rHSUjtrB1qaDsJ14RoRos5i46b6tR3v448wnRzx9NkXGADjxUguf9dz5koOg_2piMQcHdu0f3aYuYVeUZpXSrZMZ_EiApWhtoTtW1OXo70P3gHACjeMv2lXtgV) 
 
 [//]: # ( ```plantuml                                          )                        
 [//]: # ( @startuml                                            )                                     
@@ -227,7 +230,9 @@ class ToDoPresenter(Presenter):
 [//]: # ( ```                                                  )                     
 
 ### View에 대한 구현 
-To-Do:
+- 현재는 Front-end / Back-end 따로 구현하고 그 사이를 RESTful API로 만드는 방식을 추천한다. 
+- 최대한 Front-end는 주어진 데이터를 시각적 구조에 보여주는 View에 대한 구조를 맞춰서 작업을 하기를 권한다.
+    - 데이터 형식의 변경이나 새로운 종합적인 데이터를 필요로 할 때는 무조건 Back-end에서 해서 보내주는 것을 원칙으로 한다. Presenter class가 있는 이유가 이런 용도다. 
+- Front-end 자체도 훌륭한 Architecture를 가질 수 있어야 한다. 이것은 별도로 정의하겠다. 
+- 그 외에 Front-end의 경우에는 [Google optimize](https://optimize.google.com/)와 같은 A/B test 도구들을 지원해서 더 다양한 Business운영의 실험을 할 수 있게 하기를 권한다.
 
-
-## 요약
