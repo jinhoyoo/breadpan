@@ -3,8 +3,11 @@ init:
 	$(MAKE) -C frontend/todoapp init
 	$(MAKE) -C backend init
 
-dev:
-	$(MAKE) -C frontend/todoapp dev
+front-dev:
+	 $(MAKE) -C frontend/todoapp dev
+
+backend-run:
+	 $(MAKE) -C backend run 
 
 build:
 	$(MAKE) -C frontend/todoapp build
