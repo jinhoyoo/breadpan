@@ -3,7 +3,7 @@ init:
 	$(MAKE) -C frontend/todoapp init
 	$(MAKE) -C backend init
 
-front-dev:
+frontend-dev:
 	 $(MAKE) -C frontend/todoapp dev
 
 backend-run:

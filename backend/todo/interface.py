@@ -45,7 +45,7 @@ class ToDosPresenter(Presenter):
     """
     def show(self):
         todo_entry_list = self.output['todo']
-        new_list = [ { x.todo_id : {'task':x.task} } for x in todo_entry_list ]
+        new_list = [ { 'key':x.todo_id, 'task':x.task } for x in todo_entry_list ]
         return new_list
          
 
