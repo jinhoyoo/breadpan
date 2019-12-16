@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Layout from "../../components/Layout";
-import List from "../../components/List";
+import ToDoList from "../../components/ToDoList";
 import Link from "next/link";
 import { sampleFetchWrapper } from "../../utils/sample-api";
 import { Todo } from "../../interfaces";
@@ -16,7 +16,7 @@ const WithInitialProps: NextPage<Props> = ({ items, pathname }) => {
       <h1>ToDo app</h1>
 
       <p>You are currently on: {pathname} </p>
-      <List items={items} />
+      <ToDoList items={items} />
       <p>
         <Link href="/">
           <a>Go home</a>
