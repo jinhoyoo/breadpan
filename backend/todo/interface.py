@@ -14,8 +14,8 @@ class TodoDataInMemory(DataAccessGateway):
         self.TODOS[entity.todo_id] = entity.task
         return
 
-    def read(self,  todo_id) -> ToDoEntity:
-        return ToDoEntity(todo_id, self.TODOS[todo_id])
+    def read(self, entity_id) -> ToDoEntity:
+        return ToDoEntity(entity_id, self.TODOS[entity_id])
 
     def read_all(self):
         return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
@@ -24,8 +24,8 @@ class TodoDataInMemory(DataAccessGateway):
         self.TODOS[entity.todo_id] = entity.task
         return
 
-    def delete(self, todo_id):
-        del self.TODOS[todo_id]
+    def delete(self, entity_id: str):
+        del self.TODOS[entity_id]
         return
 
 

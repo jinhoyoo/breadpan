@@ -37,8 +37,9 @@ class ToDoReadInteractor(UsecaseInteractor):
         todo_id = self.input["todo_id"]
 
         # Read data.
-        t = data.read(todo_id)
+        t = data.read(entity_id=todo_id)
 
+        # Return the entity via UsecaseOutputPort.
         return UsecaseOutputPort(todo=t)
 
 
@@ -51,5 +52,8 @@ class ToDoDeleteInteractor(UsecaseInteractor):
     def run(self, data: DataAccessGateway):
         # Get task ID
         todo_id = self.input["todo_id"]
+        
+        # Delete data by entity id. 
         data.delete(todo_id)
+
         return UsecaseOutputPort()

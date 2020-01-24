@@ -227,6 +227,42 @@ package breadpan.interface <<Frame>> #DDDDDD{
 @enduml
 ``` -->
 
+#### DataAccessGateway사용 방법
+
+`DataAccessGateway`는 일종의 데이터를 저장/관리하는 인터페이스를 통일하기 위해 만든 것이다. 이것을 상속받아서 각 DB시스템 별로 *구체적인* 구현을 하게 된다. 현재 `DataAccessGateway`는 아래와 같이 완전 추상 클래스로 만들었다. 
+
+```python
+class DataAccessGateway(metaclass=ABCMeta):
+    """Interface of data access class. 
+    """
+    @abstractmethod
+    def create(self, entity: Entity):
+        pass
+
+    @abstractmethod
+    def read(self, entity_id: str, **kwargs):
+        pass
+
+    @abstractmethod
+    def read_all(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def update(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete(self, entity_id: str, **kwargs):
+        pass
+```
+
+각 함수들의 목적은 아래와 같다.
+ * `create()` : Entity를 DB에 생성하는 기능을 구현합니다. 
+ * `read()` : Entity를 주어진 ID로 DB에 생성하는 기능을 구현합니다. 
+ * `update()` 
+ * `delete()`
+
+
 
 ### View에 대한 구현 
 - 현재는 Front-end / Back-end 따로 구현하고 그 사이를 RESTful API로 만드는 방식을 추천한다. 

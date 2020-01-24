@@ -10,7 +10,7 @@ class DataAccessGateway(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def read(self,  **kwargs):
+    def read(self,  entity_id: str, **kwargs):
         pass
 
     @abstractmethod
@@ -22,7 +22,7 @@ class DataAccessGateway(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def delete(self,  **kwargs):
+    def delete(self, entity_id: str, **kwargs):
         pass
 
 
