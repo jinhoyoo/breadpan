@@ -22,32 +22,35 @@ Bread pan
 ![PlantUML model](http://www.plantuml.com/plantuml/svg/TP3FJiCm3CRlVGgVaUOdgA8X_Y1EsuK3HoypQ29DAjlHD37UdMKfgg2Xj_xywHT_NgkHM1v2vmEfmclAiZd6UpBQaR9EkFpVUi-gJsHyf5FNZUG_w9rX9qpxaI9oj8ETeEyVXGPs3Zuxk7mF5IEwXkMhuSdAdfH_YQwcbpfuZcEsRHA37d7I_pC_8yxKMCXRaf9TKbYjRdxe9jkaQ6VRPKfsIUiIYxCscn_A2s_a-SyHjyBAPGQ8PzVSyYv5anJ2DUDQfUT8xJfBBxkiEUxp4Bu1)
 
 
-[//]: # ( ```plantuml                                          )      
-[//]: # (@startuml                                             )    
-[//]: # (class YourOwnDatabases                                )        
-[//]: # (class DataAccessGateway                               )    
-[//]: # (                                                      )                
-[//]: # (package breadpan.entity <<Frame>> {                   )            
-[//]: # (    Entity ..> DataAccessGateway                      )        
-[//]: # (}                                                     )    
-[//]: # (                                                      )        
-[//]: # (package breadpan.usecase <<Frame>> {                  )
-[//]: # (                                                      )        
-[//]: # (    UsecaseInputPort <.. Entity                       )        
-[//]: # (    UsecaseInputPort <|.. UsecaseInteractor           )    
-[//]: # (    UsecaseInteractor --* UsecaseOutputPort           )
-[//]: # (    UsecaseInteractor ..> DataAccessGateway           )
-[//]: # (    DataAccessGateway <|.. YourOwnDatabases           )                     
-[//]: # (                                                      )
-[//]: # (}                                                     )
-[//]: # (                                                      )
-[//]: # (package breadpan.interface <<Frame>> {                )
-[//]: # (  Presenter ..|> UsecaseOutputPort                    )
-[//]: # (  Controller ..> UsecaseInteractor                    )
-[//]: # (  Controller --* Presenter                            )
-[//]: # (}                                                     )
-[//]: # (@enduml                                               )
-[//]: # ( ```plantuml                                          )
+<!-- 
+```plantuml
+@startuml
+
+class YourOwnDatabases
+class DataAccessGateway
+
+package breadpan.entity <<Frame>> {
+    Entity ..> DataAccessGateway
+}
+
+package breadpan.usecase <<Frame>> {
+
+    UsecaseInputPort <.. Entity
+    UsecaseInputPort <|.. UsecaseInteractor
+    UsecaseInteractor --* UsecaseOutputPort
+    UsecaseInteractor ..> DataAccessGateway
+    DataAccessGateway <|.. YourOwnDatabases
+}
+
+package breadpan.interface <<Frame>> {
+  Presenter ..|> UsecaseOutputPort
+  Controller ..> UsecaseInteractor
+  Controller --* Presenter
+}
+
+@enduml
+``` -->
+
 
 이 구조에 따라서 실제 Application을 만드는 예제로 할 일 관리 시스템(To-Do management system)를 만든다고 가정하고 설명을 할 것이다. 
 
