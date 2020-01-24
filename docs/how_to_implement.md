@@ -25,23 +25,24 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 * ```interface```
     - 외부의 다른 구현들과 연결 (예: 웹)하는데 있어서 필요한 작업 처리  
 
-![how_to_implement](https://www.plantuml.com/plantuml/png/0/TPBD2i8m48JlVOgS1VC4fIZ-uKal7ZokwIfYcvJT3IBgkvlQ7z2qkUNRONOcPCO29Bui4bC0ipewJxkxNOB02HYvnVLzRWmoRq3m3eyagS3Su8BgH0Xv1LQZbQiyL9gk2KhCClLCL3Yh1ckT3RYy1tmyemch8wD3mxUsyh9t92hLkdKVcR-2eAU214OSAVMhxlbqEkdepajdCgOUxDEgO_wD4htjKFjhlU8Cvh__df2ndeNDhomE6YGBPuLSKM2JBihyAwdhzgOXoWnj7lx11m00 "how_to_implement")
 
-<!-- 
- ```plantuml
+![how_to_implement](https://www.plantuml.com/plantuml/png/0/TL4x3i8m3DrpYin8pGcg2iHFJB0mC9fW4A8abUq8LS3TIIWWFY7Zyylxs7qM80d7MYbR0xDU-K3pank1m1eOMQa6x05sgDU4i6d06NIobrQNvOJWY5Mbpqh7D-vWOogTVW-iHUOf29wWLTUCJc2qqU93wAwqx0OprmHPU19T6lEG_pE_HC8B5IImukcJ-qHrKVIUw3p8G-8FDrycSN_GBiJF-dB5zybW2nQ_ThWWP4opw7kfiY67tWdvkiOkMwxp6oLLVOccA7rqctZi6m00 "how_to_implement")
+
+<!-- ```plantuml
 @startuml
+
 class YourOwnDatabases
-class DataAccessGateway
 
 package breadpan.entity <<Frame>> {
     Entity ..> DataAccessGateway
 }
 
 package breadpan.usecase <<Frame>> {
+
     UsecaseInputPort <.. Entity
-    UsecaseInputPort <|.. UsecaseInteractor  
-    UsecaseInteractor --* UsecaseOutputPort  
-    UsecaseInteractor ..> DataAccessGateway  
+    UsecaseInputPort <|.. UsecaseInteractor
+    UsecaseInteractor --* UsecaseOutputPort
+    UsecaseInteractor ..> DataAccessGateway
     DataAccessGateway <|.. YourOwnDatabases
 }
 
@@ -50,6 +51,7 @@ package breadpan.interface <<Frame>> {
   Controller ..> UsecaseInteractor
   Controller --* Presenter
 }
+
 @enduml
 ``` -->
 

@@ -19,15 +19,14 @@ Bread pan
 
 각 기본 Class들의 구조는 이와 같이 되어 있다. 이 기본 구조들을 상속 받아서 맞게 구현하면 된다.
 
-![PlantUML model](http://www.plantuml.com/plantuml/svg/TP3FJiCm3CRlVGgVaUOdgA8X_Y1EsuK3HoypQ29DAjlHD37UdMKfgg2Xj_xywHT_NgkHM1v2vmEfmclAiZd6UpBQaR9EkFpVUi-gJsHyf5FNZUG_w9rX9qpxaI9oj8ETeEyVXGPs3Zuxk7mF5IEwXkMhuSdAdfH_YQwcbpfuZcEsRHA37d7I_pC_8yxKMCXRaf9TKbYjRdxe9jkaQ6VRPKfsIUiIYxCscn_A2s_a-SyHjyBAPGQ8PzVSyYv5anJ2DUDQfUT8xJfBBxkiEUxp4Bu1)
+
+![README](https://www.plantuml.com/plantuml/png/0/TL4x3i8m3DrpYin8pGcg2iHFJB0mC9fW4A8abUq8LS3TIIWWFY7Zyylxs7qM80d7MYbR0xDU-K3pank1m1eOMQa6x05sgDU4i6d06NIobrQNvOJWY5Mbpqh7D-vWOogTVW-iHUOf29wWLTUCJc2qqU93wAwqx0OprmHPU19T6lEG_pE_HC8B5IImukcJ-qHrKVIUw3p8G-8FDrycSN_GBiJF-dB5zybW2nQ_ThWWP4opw7kfiY67tWdvkiOkMwxp6oLLVOccA7rqctZi6m00 "README")
 
 
-<!-- 
-```plantuml
+<!-- ```plantuml
 @startuml
 
 class YourOwnDatabases
-class DataAccessGateway
 
 package breadpan.entity <<Frame>> {
     Entity ..> DataAccessGateway
