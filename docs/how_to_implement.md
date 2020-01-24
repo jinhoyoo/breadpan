@@ -25,35 +25,33 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 * ```interface```
     - 외부의 다른 구현들과 연결 (예: 웹)하는데 있어서 필요한 작업 처리  
 
-![PlantUML model](http://www.plantuml.com/plantuml/svg/TP3FJiCm3CRlVGgVaUOdgA8X_Y1EsuK3HoypQ29DAjlHD37UdMKfgg2Xj_xywHT_NgkHM1v2vmEfmclAiZd6UpBQaR9EkFpVUi-gJsHyf5FNZUG_w9rX9qpxaI9oj8ETeEyVXGPs3Zuxk7mF5IEwXkMhuSdAdfH_YQwcbpfuZcEsRHA37d7I_pC_8yxKMCXRaf9TKbYjRdxe9jkaQ6VRPKfsIUiIYxCscn_A2s_a-SyHjyBAPGQ8PzVSyYv5anJ2DUDQfUT8xJfBBxkiEUxp4Bu1)
+![how_to_implement](https://www.plantuml.com/plantuml/png/0/TPBD2i8m48JlVOgS1VC4fIZ-uKal7ZokwIfYcvJT3IBgkvlQ7z2qkUNRONOcPCO29Bui4bC0ipewJxkxNOB02HYvnVLzRWmoRq3m3eyagS3Su8BgH0Xv1LQZbQiyL9gk2KhCClLCL3Yh1ckT3RYy1tmyemch8wD3mxUsyh9t92hLkdKVcR-2eAU214OSAVMhxlbqEkdepajdCgOUxDEgO_wD4htjKFjhlU8Cvh__df2ndeNDhomE6YGBPuLSKM2JBihyAwdhzgOXoWnj7lx11m00 "how_to_implement")
 
+<!-- 
+ ```plantuml
+@startuml
+class YourOwnDatabases
+class DataAccessGateway
 
-[//]: # ( ```plantuml                                          )      
-[//]: # (@startuml                                             )    
-[//]: # (class YourOwnDatabases                                )        
-[//]: # (class DataAccessGateway                               )    
-[//]: # (                                                      )                
-[//]: # (package breadpan.entity <<Frame>> {                   )            
-[//]: # (    Entity ..> DataAccessGateway                      )        
-[//]: # (}                                                     )    
-[//]: # (                                                      )        
-[//]: # (package breadpan.usecase <<Frame>> {                  )
-[//]: # (                                                      )        
-[//]: # (    UsecaseInputPort <.. Entity                       )        
-[//]: # (    UsecaseInputPort <|.. UsecaseInteractor           )    
-[//]: # (    UsecaseInteractor --* UsecaseOutputPort           )
-[//]: # (    UsecaseInteractor ..> DataAccessGateway           )
-[//]: # (    DataAccessGateway <|.. YourOwnDatabases           )                     
-[//]: # (                                                      )
-[//]: # (}                                                     )
-[//]: # (                                                      )
-[//]: # (package breadpan.interface <<Frame>> {                )
-[//]: # (  Presenter ..|> UsecaseOutputPort                    )
-[//]: # (  Controller ..> UsecaseInteractor                    )
-[//]: # (  Controller --* Presenter                            )
-[//]: # (}                                                     )
-[//]: # (@enduml                                               )
-[//]: # ( ```plantuml                                          )    
+package breadpan.entity <<Frame>> {
+    Entity ..> DataAccessGateway
+}
+
+package breadpan.usecase <<Frame>> {
+    UsecaseInputPort <.. Entity
+    UsecaseInputPort <|.. UsecaseInteractor  
+    UsecaseInteractor --* UsecaseOutputPort  
+    UsecaseInteractor ..> DataAccessGateway  
+    DataAccessGateway <|.. YourOwnDatabases
+}
+
+package breadpan.interface <<Frame>> {
+  Presenter ..|> UsecaseOutputPort
+  Controller ..> UsecaseInteractor
+  Controller --* Presenter
+}
+@enduml
+``` -->
 
 예제로 설명하기
 ---------
@@ -82,22 +80,23 @@ class ToDoEntity(Entity):
         self.task = task
 ```
 
-![PlantUML model](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuU8gI4pEJanFLKWgIarCAKZCqqlDAyaigLImiN4hIinDjRDJK7O10uLgBWKWG5EdvmfLhgkhu99OakYOd9nQNEoUM99QdbZ9LOimloG_9H_3R09crW0D3G7g0_F1fZcavgK0dGq0) 
 
-[//]: # ( ```plantuml                                          )
-[//]: # ( @startuml                                            )
-[//]: # (                                                      )
-[//]: # ( package breadpan.entity <<Frame>> #DDDDDD {          )
-[//]: # (     breadpan.entity.Entity <-- DataAccessGateway     )
-[//]: # ( }                                                    )
-[//]: # (                                                      )
-[//]: # (                                                      )
-[//]: # ( package todo.entity <<Frame>> {                      )         
-[//]: # (     breadpan.entity.Entity <|-- TodoEntity           )    
-[//]: # ( }                                                    ) 
-[//]: # (                                                      ) 
-[//]: # ( @enduml                                              )        
-[//]: # ( ```                                                  )        
+
+![how_to_implement-1](https://www.plantuml.com/plantuml/png/0/SoWkIImgAStDuU8gI4pEJanFLKWgIarCAKZCqqlDAyaigLImiN4hIinDjRDJK7O10uLgBWKWG5EdvmfLhgkhu99OakYOd9nQNEoUM99QdbZ9LOimloG_9H_JRFncrkZfAOG0zK7uGDCSKlDIWAu60000 "how_to_implement-1")
+
+<!-- 
+```plantuml
+@startuml
+
+package breadpan.entity <<Frame>> #DDDDDD {
+    breadpan.entity.Entity <-- DataAccessGateway
+}
+
+package todo.entity <<Frame>> {
+    breadpan.entity.Entity <|.. TodoEntity
+}
+@enduml
+``` -->
 
 
 ### Usecase
@@ -115,9 +114,8 @@ class ToDoCreateInteractor(UsecaseInteractor):
         contents = self.input["contents"]
         t = ToDoEntity(todo_id, contents['task'])
 
-        # Store the data. 
+        # Store the data.
         data.create(t)
-
 
         # Link to output port
         return UsecaseOutputPort(todo=t) #Expose the data 't' with 'todo' as key.
@@ -135,26 +133,23 @@ interactor.run(data)  # ToDoCreateInteractor의 run()실행.
 
 이러한 관계들을 정리해보면, 아래와 같은 관계가 된다. 
 
+![how_to_implement-2](https://www.plantuml.com/plantuml/png/0/XP712e9048RlFiL0jy1z0X4ZAJf47Um1fdMAI5tP7GaftxtLDOmIdSkmo_V_i_ClH8PHSvLd7fGextWbO9KgKHcIQ0Y2OACnfp24fmTjnSYuafACsIBJ0si8Na8uqQrWqXUK919xRCbTiQTSwTff4nMhjIQhsxKaIbRQoS_sDYsn-CmL9zS7pZdCStD-PSL7fNdQxb3r62nzV_JPKmjPoLzA7TzuGyg_ex-INiHTzO7B38s1aJmQ3o8gKljtRm00 "how_to_implement-2")
 
-![PlantUML model](http://www.plantuml.com/plantuml/svg/XP512i8m44NtEKN0dP2Ue9IAHUb2T54FCAQZY6rIaWbIrBkRDfOkAkriGiBxVp9_KajWoDKLQq0-u8QSTAaZPr62HHx7EmCr9Wb_CUuh0uADb6Zj7WYVqFBuBKJGt1MXkOB4gF3NZipL0MjjsbvQw4nl3G9Xte4WIPkWllZNiW4rT8tEuHovpc0PMxHh79sqeLcte_jHV2t4tq_FJECLauJOXmtPZasd-QwolaBCiW9h-NG-xvMYAlswlW00) 
+ <!-- ```plantuml
+ @startuml
+ package todo.usecase <<Frame>> {
+     DataAccessGateway <|.. todo.interface.TodoDataInMemory
+     ToDoCreateInteractor <|.. breadpan.usecase.UsecaseInteractor
+     breadpan.usecase.UsecaseInteractor <|.. breadpan.usecase.UsecaseInputPort
+     breadpan.usecase.UsecaseOuputPort *-- ToDoCreateInteractor
+     ToDoCreateInteractor <-- DataAccessGateway
+    }
 
-[//]: # ( ```plantuml                                                                       )
-[//]: # ( @startuml                                                                         )
-[//]: # (                                                                                   )
-[//]: # ( package todo.usecase <<Frame>> {                                                  )                
-[//]: # (     DataAccessGateway <|-- todo.interface.TodoDataInMemory                        )        
-[//]: # (     ToDoCreateInteractor <|-- breadpan.usecase.UsecaseInteractor                  )            
-[//]: # (     breadpan.usecase.UsecaseInteractor <|-- breadpan.usecase.UsecaseInputPort     )                 
-[//]: # (     breadpan.usecase.UsecaseOuputPort *-- ToDoCreateInteractor                    )    
-[//]: # (     ToDoCreateInteractor <-- DataAccessGateway                                    )        
-[//]: # ( }                                                                                 )
-[//]: # (                                                                                   )
-[//]: # ( package breadpan.usecase <<Frame>> #DDDDDD{                                       )    
-[//]: # (     class UsecaseInteractor                                                       )        
-[//]: # ( }                                                                                 )    
-[//]: # (                                                                                   )    
-[//]: # ( @enduml                                                                           )    
-[//]: # ( ```                                                                               )    
+ package breadpan.usecase <<Frame>> #DDDDDD{
+     class UsecaseInteractor
+ }
+ @enduml
+ ``` -->
 
 ### Interface
  
@@ -206,28 +201,30 @@ class ToDoPresenter(Presenter):
         return { todo_entry.todo_id : {'task':todo_entry.task}  }
 ```
 
-현재의 interface계층의 구조는 아래와 같다. 
+현재의 interface계층의 구조는 아래와 같다.
 
-![PlantUML model](http://www.plantuml.com/plantuml/svg/RP11pe8m48NtFSKa_nfEG0X_91eN9Ywum5X6OomTCXrZ27ftGGqqOdVzEk_rpIk2ekYrSSQqQ2zu8b2kEJrx9JcY9SYojM13UGuz681gU2rHSUjtrB1qaDsJ14RoRos5i46b6tR3v448wnRzx9NkXGADjxUguf9dz5koOg_2piMQcHdu0f3aYuYVeUZpXSrZMZ_EiApWhtoTtW1OXo70P3gHACjeMv2lXtgV) 
+![how_to_implement-3](https://www.plantuml.com/plantuml/png/0/RP1D2i8m48NtFSM0w_O4fLGiYWkXYrvWJ4SHqqoPZ4XHxsv_n4PgTlaoxytBoxsYwAsnKTIYkUAPGBdcvEAKv8I684stWWrb6JmYWAf_B51nxmxKi7IGFkCO1h8sXhpVeT8TktxoA8HrYswsIaeXJyDjKbLSy1VzLspOgR2reMHcOvuGG9mj4dw6WjqBczVy-MM6e81LCPwX1sFHUmZJJ-JNDITNzzs-0G00 "how_to_implement-3")
 
-[//]: # ( ```plantuml                                          )                        
-[//]: # ( @startuml                                            )                                     
-[//]: # (                                                      )             
-[//]: # ( package todo.interface <<Frame>> {                   )                                            
-[//]: # (   TodoDataInMemory <|-- DataAccessGateway            )                                           
-[//]: # (   breadpan.interface.Presenter <|-- ToDoPresenter    )                                               
-[//]: # (   breadpan.interface.Controller <|-- ToDoController  )                                                 
-[//]: # (   ToDoController -> TodoDataInMemory                 )                                                           
-[//]: # (   ToDoPresenter <- ToDoController                    )                                                     
-[//]: # ( }                                                    )                                               
-[//]: # (                                                      )             
-[//]: # ( package breadpan.interface <<Frame>> #DDDDDD{        )                     
-[//]: # (   class Presenter                                    )         
-[//]: # (   class Controller                                   )     
-[//]: # ( }                                                    )             
-[//]: # (                                                      )             
-[//]: # ( @enduml                                              )             
-[//]: # ( ```                                                  )                     
+<!-- 
+```plantuml
+@startuml
+
+package todo.interface <<Frame>> {
+  TodoDataInMemory <|-- DataAccessGateway
+  breadpan.interface.Presenter <|-- ToDoPresenter
+  breadpan.interface.Controller <|-- ToDoController
+  ToDoController -> TodoDataInMemory
+  ToDoPresenter <- ToDoController
+}
+
+package breadpan.interface <<Frame>> #DDDDDD{
+  class Presenter
+  class Controller
+}
+
+@enduml
+``` -->
+
 
 ### View에 대한 구현 
 - 현재는 Front-end / Back-end 따로 구현하고 그 사이를 RESTful API로 만드는 방식을 추천한다. 
@@ -235,4 +232,3 @@ class ToDoPresenter(Presenter):
     - 데이터 형식의 변경이나 새로운 종합적인 데이터를 필요로 할 때는 무조건 Back-end에서 해서 보내주는 것을 원칙으로 한다. Presenter class가 있는 이유가 이런 용도다. 
 - Front-end 자체도 훌륭한 Architecture를 가질 수 있어야 한다. 이것은 별도로 정의하겠다. 
 - 그 외에 Front-end의 경우에는 [Google optimize](https://optimize.google.com/)와 같은 A/B test 도구들을 지원해서 더 다양한 Business운영의 실험을 할 수 있게 하기를 권한다.
-
