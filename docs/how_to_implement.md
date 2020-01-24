@@ -201,7 +201,8 @@ class ToDoPresenter(Presenter):
         return { todo_entry.todo_id : {'task':todo_entry.task}  }
 ```
 
-현재의 interface계층의 구조는 아래와 같다. 
+현재의 interface계층의 구조는 아래와 같다.
+
 ![how_to_implement-3](https://www.plantuml.com/plantuml/png/0/RP1D2i8m48NtFSM0w_O4fLGiYWkXYrvWJ4SHqqoPZ4XHxsv_n4PgTlaoxytBoxsYwAsnKTIYkUAPGBdcvEAKv8I684stWWrb6JmYWAf_B51nxmxKi7IGFkCO1h8sXhpVeT8TktxoA8HrYswsIaeXJyDjKbLSy1VzLspOgR2reMHcOvuGG9mj4dw6WjqBczVy-MM6e81LCPwX1sFHUmZJJ-JNDITNzzs-0G00 "how_to_implement-3")
 
 <!-- 
