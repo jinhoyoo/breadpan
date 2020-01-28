@@ -6,18 +6,18 @@ Breadpan이 지향하는 기본 구조는 Clean architecture에서 주장하는 
 서비스 구현 방법
 -----
 
-현재 추천하는 방법은 아래와 같다. 
+현재 추천하는 방법은 아래와 같다.
 1. 각 Package들의 기본 Class구조를 상속받아서 자신만의 Entity, Usecase, Controller, Presenter를 구현한다. 
 2. 1.에 대한 Test code를 작성한다. 
 3. 2.에 기반해서 이를 다양한 응용 프로그램으로 만든다. ex)RESTful API server.
-    - View에 보여줄 ViewModel까지 만드는게 Back-end가 할 일이다. 
-4. View에 해당하는 모든 기능은 Front-end에서 구현한다. 최대한 Front-end는 복잡한 구현이 없도록 한다. 
+    - View에 보여줄 ViewModel까지 만드는게 Back-end가 할 일이다.
+4. View에 해당하는 모든 기능은 Front-end에서 구현한다. 최대한 Front-end는 복잡한 구현없이 Controller부분에서 만들어 낸 데이터를 보여주거나 조작하는 정도만 구현한다.
 
 
-3개 Package들
+3개 계층들
 ------
 
-내부에는 크게 3개의 package가 있다. 
+Breadpan은 크게 3개의 계층으로 모듈들을 구분한다. 
 * ```entity```
     - 내부에서 사용하는 고수준의 규칙들을 구현
 * ```usecase```
@@ -205,19 +205,24 @@ class ToDoPresenter(Presenter):
 
 현재의 interface계층의 구조는 아래와 같다.
 
-![how_to_implement-3](https://www.plantuml.com/plantuml/png/0/RP1D2i8m48NtFSM0w_O4fLGiYWkXYrvWJ4SHqqoPZ4XHxsv_n4PgTlaoxytBoxsYwAsnKTIYkUAPGBdcvEAKv8I684stWWrb6JmYWAf_B51nxmxKi7IGFkCO1h8sXhpVeT8TktxoA8HrYswsIaeXJyDjKbLSy1VzLspOgR2reMHcOvuGG9mj4dw6WjqBczVy-MM6e81LCPwX1sFHUmZJJ-JNDITNzzs-0G00 "how_to_implement-3")
+![how_to_implement-3](https://www.plantuml.com/plantuml/png/0/RP513e8m44Ntd68Ir_G4X60a6XScBhZ0M4P3B2rfnnYYtjq21YhGNNzdtlpvpHoZvKUjegX1USSR0PlIY4epsIjAWYJPMwmfJU4L0HJ-CKV6epvHRMmBoLi8k5Z2ia4jI7F5hUWgjbAISmTaUcBhEyUQ4ItEbXnrju5IcDoCqdh7pcYsHgcmPT9wVw40SRfm_2iAPiTpp6SAOxPPaCOcxqyN2e1Kw1mir_Qa9Mejsu0siC8W1kNVO4QwzD_s1G00 "how_to_implement-3")
 
-<!-- 
-```plantuml
+
+<!-- ```plantuml
 @startuml
 
 package todo.interface <<Frame>> {
-  TodoDataInMemory <|-- DataAccessGateway
-  breadpan.interface.Presenter <|-- ToDoPresenter
-  breadpan.interface.Controller <|-- ToDoController
+  TodoDataInMemory <|.. breadpan.entity.DataAccessGateway
+  breadpan.interface.Presenter <|.. ToDoPresenter
+  breadpan.interface.Controller <|.. ToDoController
   ToDoController -> TodoDataInMemory
   ToDoPresenter <- ToDoController
 }
+
+package breadpan.entity <<Frame>> #DDDDDD{
+    class DataAccessGateway
+}
+
 
 package breadpan.interface <<Frame>> #DDDDDD{
   class Presenter
@@ -226,6 +231,7 @@ package breadpan.interface <<Frame>> #DDDDDD{
 
 @enduml
 ``` -->
+
 
 #### DataAccessGateway사용 방법
 
@@ -257,10 +263,11 @@ class DataAccessGateway(metaclass=ABCMeta):
 ```
 
 각 함수들의 목적은 아래와 같다.
- * `create()` : Entity를 DB에 생성하는 기능을 구현합니다. 
- * `read()` : Entity를 주어진 ID로 DB에 생성하는 기능을 구현합니다. 
- * `update()` 
- * `delete()`
+ * `create()` : Entity를 DB에 생성하는 기능을 구현
+ * `read()` : 지정된 Engity를 읽어오는 기능을 구현  
+ * `read_all()` : 저장된 Entity를 모두 읽어오는 기능을 구현
+ * `update()` : 지정된 Entity를 update하고자 하는 기능을 구현 
+ * `delete()` : 지정된 Entity를 삭제한느 기능을 구현 
 
 
 
@@ -270,3 +277,4 @@ class DataAccessGateway(metaclass=ABCMeta):
     - 데이터 형식의 변경이나 새로운 종합적인 데이터를 필요로 할 때는 무조건 Back-end에서 해서 보내주는 것을 원칙으로 한다. Presenter class가 있는 이유가 이런 용도다. 
 - Front-end 자체도 훌륭한 Architecture를 가질 수 있어야 한다. 이것은 별도로 정의하겠다. 
 - 그 외에 Front-end의 경우에는 [Google optimize](https://optimize.google.com/)와 같은 A/B test 도구들을 지원해서 더 다양한 Business운영의 실험을 할 수 있게 하기를 권한다.
+

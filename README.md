@@ -9,16 +9,38 @@ Bread pan
 
 시작하기
 -----
+예제로 만든 것들을 돌려보는 것
 
-### 전체 구조
+```bash
+
+# Initialization 
+$ make init
+
+# Run backend test
+$ make test
+
+# Run backend service
+$ make backend-run 
+
+# Run front-end dev mode
+$ make frontend-dev
+
+```
+ 자세한 내용은 `Makefile`을 참고하면 된다. 
+
+-----------
+
+
+Breadpan을 이용해서 시스템을 만드는 방법
+-----
+
+### 시작하는 순서 
+
+
+breadpan을 이용해서 구현을 할 때 먼저 아래의 설계 개념들을 생각해야 한다. 
 
 * 전체 시스템을 ```entity```, ```usecase```, ```interface``` 계층으로 구분했다.
 * 이 규칙을 따라서 서비스를 구현한다. 이 계층들의 의미는 Clean architecture[[en](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)/[kr](https://blog.coderifleman.com/2017/12/18/the-clean-architecture/)]를 참조하면 된다.
-
-
-
-각 기본 Class들의 구조는 이와 같이 되어 있다. 이 기본 구조들을 상속 받아서 맞게 구현하면 된다.
-
 
 ![README](https://www.plantuml.com/plantuml/png/0/TL4x3i8m3DrpYin8pGcg2iHFJB0mC9fW4A8abUq8LS3TIIWWFY7Zyylxs7qM80d7MYbR0xDU-K3pank1m1eOMQa6x05sgDU4i6d06NIobrQNvOJWY5Mbpqh7D-vWOogTVW-iHUOf29wWLTUCJc2qqU93wAwqx0OprmHPU19T6lEG_pE_HC8B5IImukcJ-qHrKVIUw3p8G-8FDrycSN_GBiJF-dB5zybW2nQ_ThWWP4opw7kfiY67tWdvkiOkMwxp6oLLVOccA7rqctZi6m00 "README")
 
@@ -50,8 +72,16 @@ package breadpan.interface <<Frame>> {
 @enduml
 ``` -->
 
+이런 생각에 따라, 아래와 같이 작업을 하면 된다. 
 
-이 구조에 따라서 실제 Application을 만드는 예제로 할 일 관리 시스템(To-Do management system)를 만든다고 가정하고 설명을 할 것이다. 
+1. Business model에서 사용하는 Entity 계층을 구현하고 테스트 
+2. Business logic을 담고 있는 Usecase들 계층을 구현하고 테스트 
+3. 외부 인터페이스와 연결되는 Controller / Presenter를 구현하고 연결하고 테스트 
+
+
+### 설명하기 위한 예제  
+
+이 구조에 따라서 실제 Application을 만드는 예제로 할 일 관리 시스템(To-Do management system)를 만들어 보려고 한다.
 
 ### Entity 계층 구현 
 
@@ -60,8 +90,17 @@ package breadpan.interface <<Frame>> {
 from breadpan.entity import Entity
 
 class ToDoEntity(Entity):
-    def __init__(self, todo_id, task):
-        self.todo_id = todo_id
+    """Example of data entity class for ToDo
+    """
+    def __init__(self, todo_id:str, task:dict):
+        """Contructor 
+        
+        Arguments:
+            Entity {[Entity]} -- Base entity class
+            todo_id {str} -- ID of todo item. Linked to entity_key.
+            task {dict} -- Contents of todo task.
+        """
+        self.entity_key = todo_id
         self.task = task
 ```
 
@@ -91,37 +130,43 @@ class ToDoCreateInteractor(UsecaseInteractor):
 ### Interface 계층 구현 
 
 #### DataAccessGateway
-`DataAccessGateway`는 데이터 접근하는 Class들의 기본적인 인터페이스다. 예를 들어 dictionary로 데이터를 저장하는 구조를 짜면 아래와 같이 짤 수 있다. MySQL등의 외부 데이터베이스들에 접근해서 데이터를 기록하는 것도 이 인터페이스로 확장할 수 있다.  
+`DataAccessGateway`는 데이터 접근하는 Class들의 기본적인 인터페이스다. 예를 들어 dictionary로 데이터를 저장하는 구조를 짜면 아래와 같이 짤 수 있다. MySQL등의 외부 데이터베이스들에 접근해서 데이터를 기록하는 것도 이 인터페이스로 확장할 수 있다. 
 
 ```python
 from todo.entity import ToDoEntity
 from todo.usecase import DataAccessGateway
 
 class TodoDataInMemory(DataAccessGateway):
+    """ TodoDataInMemory
+    Store ToDoEntity as {key, value}:=>{todo_id, task}.
+    """
     def __init__(self):
         self.TODOS = {}
 
     def create(self, entity: ToDoEntity):
-        self.TODOS[entity.todo_id] = entity.task
+        self.TODOS[entity.entity_key] = entity.task
         return
 
-    def read(self,  todo_id) -> ToDoEntity:
-        return ToDoEntity(todo_id, self.TODOS[todo_id])
+    def read(self, entity_id) -> ToDoEntity:
+        return ToDoEntity(entity_id, self.TODOS[entity_id])
 
     def read_all(self):
         return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
 
     def update(self, entity: ToDoEntity, **kwargs):
-        self.TODOS[entity.todo_id] = entity.task
+        self.TODOS[entity.entity_key] = entity.task
         return
 
-    def delete(self, todo_id):
-        del self.TODOS[todo_id]
+    def delete(self, entity_id: str):
+        del self.TODOS[entity_id]
         return
+
 ```
 
 
 #### Controller / Presenter
+
+Controller는 실제 외부의 Framework나 Platform에 이어져서 
 
 실제 외부의 interface와 연결되서 입력/출력을 총괄하는 모듈인 Controller와 Presenter는 아래와 같이 작성한다. 
 
@@ -133,8 +178,8 @@ from todo.usecase import DataAccessGateway, ToDoCreateInteractor
 
 class ToDoPresenter(Presenter):
     def show(self):
-        todo_entry = self.output['todo'] # Take the data with key 'todo' TodoController exposed.
-        return { todo_entry.todo_id : {'task':todo_entry.task}  }
+        todo_entry = self.output['todo']
+        return { todo_entry.entity_key : {'task':todo_entry.task}  }
 
 
 class ToDoController(Controller):
@@ -174,21 +219,19 @@ api.add_resource(FlaskTodoController, '/todos/<todo_id>')
 ```
 
 
-#### View
+#### View에 대한 구현 
 
-현재는 Front-end / Back-end 따로 구현하고 그 사이를 RESTful API로 만드는 방식을 추천한다. 최대한 Front-end는 주어진 데이터를 시각적 구조에 보여주는 View에 대한 구조를 맞춰서 작업을 하고 데이터 형식의 변경이나 새로운 종합적인 데이터를 필요로 할 때는 무조건 Back-end에서 해서 보내주는 것을 원칙으로 한다. Presenter class가 있는 이유가 이런 용도다. 
-
-Front-end의 경우에는 [Google optimize](https://optimize.google.com/)와 같은 A/B test 도구들을 지원해서 더 다양한 Business운영의 실험을 할 수 있게 하기를 권한다.
+**현재는 Front-end / Back-end 따로 구현하고 그 사이를 RESTful API로 만드는 방식을 추천한다.** 그래서 Front-end는 'Back-end에서 주는 데이터를 보여주는 View'만 만드는 것을 원칙으로 한다. 데이터 형식의 변경이나 새로운 종합적인 데이터를 필요로 할 때는 무조건 Back-end에서 해서 보내주어야 한다. Presenter class는 이러한 작업을 손쉽게 하기 위해서 만들어 놓은 것이다.
 
 #### 자세한 내용
  [구현하는 방법](docs/how_to_implement.md)을 참조하기 바란다. 
 
+-----------
 
 Folder structure
 -------
 
-
-```
+```bash
 ├── backend  : Back-end 프로젝트
 │   ├── Makefile
 │   ├── README.md
@@ -197,17 +240,24 @@ Folder structure
 │   ├── tests     : Test code
 │   └── apps      : todo 예제를 가지고 다양한 형태로 만든 예제. (현재는 Flask기반 WebApp)
 │  
+├── docs
+│   └── how_to_implement.md : 자세한 프로젝트 이용 방법
 ├── frontend
-│   ├── Makefile
-│   ├── README.md
-
+│   ├── README.md 
+│   └── todoapp : React.js + Next.js + Typescript로 구현한 간단한 frontend 예제
 ```
+
+-----------
 
 그 외에 따를 원칙들
 -----
 * [12 Factors app](https://12factor.net/ko/)
 
+
+-----------
+
 다루거나 하지 않을 것
 ------
 * Clean architecture의 엄격한 정의/적용 : 이 구조는 '해석한' 형태다. 
-* 특정 Web framework에 맞춰서 코드를 재포장하지 않는다. 이러한 코드들은 'main' component안에 들어가야 한다.
+* 특정 Web framework에 맞춰서 코드를 재포장하지 않는다. 이러한 코드들은 이른바'main' component안에 들어가야 한다.
+    * 여기서 main component란, 특정 Framework나 Platform에 따라 사용하는 이른바 '세부사항'들이 제일 복잡하게 엉켜지는 Component를 말한다.
