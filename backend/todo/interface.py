@@ -11,7 +11,7 @@ class TodoDataInMemory(DataAccessGateway):
         self.TODOS = {}
 
     def create(self, entity: ToDoEntity):
-        self.TODOS[entity.todo_id] = entity.task
+        self.TODOS[entity.entity_key] = entity.task
         return
 
     def read(self, entity_id) -> ToDoEntity:
@@ -21,7 +21,7 @@ class TodoDataInMemory(DataAccessGateway):
         return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
 
     def update(self, entity: ToDoEntity, **kwargs):
-        self.TODOS[entity.todo_id] = entity.task
+        self.TODOS[entity.entity_key] = entity.task
         return
 
     def delete(self, entity_id: str):
@@ -36,7 +36,7 @@ class ToDoPresenter(Presenter):
     """
     def show(self):
         todo_entry = self.output['todo']
-        return { todo_entry.todo_id : {'task':todo_entry.task}  }
+        return { todo_entry.entity_key : {'task':todo_entry.task}  }
 
 class ToDosPresenter(Presenter):
     """ToDosPresenter
@@ -45,12 +45,15 @@ class ToDosPresenter(Presenter):
     """
     def show(self):
         todo_entry_list = self.output['todo']
-        new_list = [ { 'key':x.todo_id, 'task':x.task } for x in todo_entry_list ]
+        new_list = [ { 'key':x.entity_key, 'task':x.task } for x in todo_entry_list ]
         return new_list
          
 
 
 class ToDoController(Controller):
+    """Example of controller class of ToDo business logic
+    
+    """
 
     def __init__(self):
         self.__data = TodoDataInMemory() # Use memory DB.

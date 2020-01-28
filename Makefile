@@ -3,16 +3,16 @@ init:
 	$(MAKE) -C frontend/todoapp init
 	$(MAKE) -C backend init
 
-frontend-dev:
-	 $(MAKE) -C frontend/todoapp dev
-
 backend-run:
 	 $(MAKE) -C backend run 
 
-build:
+frontend-dev:
+	 $(MAKE) -C frontend/todoapp dev
+
+frontend-build:
 	$(MAKE) -C frontend/todoapp build
 
-run: 
+frontend-run: 
 	$(MAKE) -C frontend/todoapp run
 
 clean:
@@ -20,4 +20,5 @@ clean:
 	$(MAKE) -C frontend/todoapp clean
 
 test:
-	yarn test
+	$(MAKE) -C backend test
+#	$(MAKE) -C frontend/todoapp test

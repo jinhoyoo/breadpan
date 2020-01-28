@@ -1,4 +1,3 @@
-
 init:
 	pip install -r requirements.txt
 	pip install -r apps/flask/requirements.txt

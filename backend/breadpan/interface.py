@@ -4,14 +4,13 @@ from breadpan.entity import Entity
 
 class Presenter(UsecaseOutputPort):
     """IPresenter 
-    
     """
     def __init__(self, output_port: UsecaseOutputPort):
         self.output = output_port.output
 
     def show(self):
-        """show
-        Do any operation additionally.
+        """show function
+        Implement any operation to convert data to expose if you need.
         """
         pass
     
@@ -19,7 +18,6 @@ class Presenter(UsecaseOutputPort):
 
 class Controller(metaclass=ABCMeta):
     """Interface of data controller class.
-
     """
 
     @abstractmethod
