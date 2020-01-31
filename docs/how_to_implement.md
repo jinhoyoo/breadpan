@@ -267,7 +267,7 @@ class DataAccessGateway(metaclass=ABCMeta):
  * `read()` : 지정된 Engity를 읽어오는 기능을 구현  
  * `read_all()` : 저장된 Entity를 모두 읽어오는 기능을 구현
  * `update()` : 지정된 Entity를 update하고자 하는 기능을 구현 
- * `delete()` : 지정된 Entity를 삭제한느 기능을 구현 
+ * `delete()` : 지정된 Entity를 삭제하는 기능을 구현 
 
 
 
