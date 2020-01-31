@@ -107,7 +107,8 @@ package todo.entity <<Frame>> {
 
 `UsecaseInputPort`는 외부에서 들어오는 데이터들을 가지고 `UsecaseInteractor`에 데이터를 전달하는 역할을 한다. `UsecaseInteractor`는 `UsecaseInputPort`를 상속 받아서 사용하게 된다. 
 
-예를 들어, `ToDoCreateInteractor`는 `UsecaseInteractor`를 상속받아서 `run()`을 아래처럼 구현한다. `self.input`은 이 class의 constructur에서 입력받은 key/value argument들을 보관하고 있다. 이로서 arguement의 data 형식에서 자유로워질 수 있다.  `self.input`의 데이터를 가지고 작업을 작업을 한 다음, `DataAccessGateway`를 통해 저장한다.  
+예를 들어, `ToDoCreateInteractor`는 `UsecaseInteractor`를 상속받아서 `run()`을 아래처럼 구현한다. `self.input`은 이 class의 constructur에서 입력받은 key/value argument들을 보관하고 있다. 이로서 arguement의 data 형식에서 자유로워질 수 있다.  `self.input`의 데이터를 가지고 작업을 작업을 한 다음, `DataAccessGateway`를 통해 저장한다.
+
 ```python
 class ToDoCreateInteractor(UsecaseInteractor):
     def run(self,  data: DataAccessGateway):        
@@ -139,6 +140,7 @@ interactor.run(data)  # ToDoCreateInteractor의 run()실행.
 
  <!-- ```plantuml
  @startuml
+ 
  package todo.usecase <<Frame>> {
      DataAccessGateway <|.. todo.interface.TodoDataInMemory
      ToDoCreateInteractor <|.. breadpan.usecase.UsecaseInteractor
@@ -152,6 +154,7 @@ interactor.run(data)  # ToDoCreateInteractor의 run()실행.
  }
  @enduml
  ``` -->
+
 
 ### Interface
  
