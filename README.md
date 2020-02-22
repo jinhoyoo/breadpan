@@ -42,8 +42,7 @@ breadpan을 이용해서 구현을 할 때 먼저 아래의 설계 개념들을 
 * 전체 시스템을 ```entity```, ```usecase```, ```interface``` 계층으로 구분했다.
 * 이 규칙을 따라서 서비스를 구현한다. 이 계층들의 의미는 Clean architecture[[en](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)/[kr](https://blog.coderifleman.com/2017/12/18/the-clean-architecture/)]를 참조하면 된다.
 
-![README](https://www.plantuml.com/plantuml/png/0/TL4x3i8m3DrpYin8pGcg2iHFJB0mC9fW4A8abUq8LS3TIIWWFY7Zyylxs7qM80d7MYbR0xDU-K3pank1m1eOMQa6x05sgDU4i6d06NIobrQNvOJWY5Mbpqh7D-vWOogTVW-iHUOf29wWLTUCJc2qqU93wAwqx0OprmHPU19T6lEG_pE_HC8B5IImukcJ-qHrKVIUw3p8G-8FDrycSN_GBiJF-dB5zybW2nQ_ThWWP4opw7kfiY67tWdvkiOkMwxp6oLLVOccA7rqctZi6m00 "README")
-
+![README](https://www.plantuml.com/plantuml/png/0/VP5D3e9038NtSugv09o048r_SIKR5oxhK8qHPqZR2I7gtMK0DGXnbgzlllQrCnOWyRT2ALC0ipuuJxlABa7W28oiL0dc2cVKHqB8Ix0nMhb8hPDaJN33DDLtfPktwkGuJdNuFJS6cJSWM46jdXCSpsYQ5WDGIzftXQqjlMIEf6Ls-EbwyeYYhof8OCJHqFjMMrYlxhpqY3_USPZW7QdT4AFrJGM_X0OdCFYpmuoGCTHq53scXrmuA-IA0WSv1fb_B1ze66M6Dc-E_G80 "README")
 
 <!-- ```plantuml
 @startuml
@@ -56,21 +55,22 @@ package breadpan.entity <<Frame>> {
 
 package breadpan.usecase <<Frame>> {
 
-    UsecaseInputPort <.. Entity
-    UsecaseInputPort <|.. UsecaseInteractor
-    UsecaseInteractor --* UsecaseOutputPort
+    UsecaseInputPort ..> Entity
+    UsecaseInputPort <|-- UsecaseInteractor
+    UsecaseInteractor ..> UsecaseOutputPort
     UsecaseInteractor ..> DataAccessGateway
-    DataAccessGateway <|.. YourOwnDatabases
+    DataAccessGateway <|-- YourOwnDatabases
 }
 
 package breadpan.interface <<Frame>> {
-  Presenter ..|> UsecaseOutputPort
+  Presenter --|> UsecaseOutputPort
   Controller ..> UsecaseInteractor
-  Controller --* Presenter
+  Controller ..> Presenter
 }
 
 @enduml
 ``` -->
+
 
 이런 생각에 따라, 아래와 같이 작업을 하면 된다. 
 
