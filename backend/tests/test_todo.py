@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from .context import todo
 import unittest
 

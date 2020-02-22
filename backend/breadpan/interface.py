@@ -8,9 +8,11 @@ class Presenter(UsecaseOutputPort):
     def __init__(self, output_port: UsecaseOutputPort):
         self.output = output_port.output
 
-    def show(self):
-        """show function
-        Implement any operation to convert data to expose if you need.
+    def show(self) -> dict:
+        """show the data to outer. 
+        
+        Implement any operation to convert data to expose if you need. 
+        Or retruen data as we got from the UsecaseOutputPort. 
         """
         pass
     
