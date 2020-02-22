@@ -65,7 +65,7 @@ breadpan을 이용해서 구현을 할 때 먼저 아래의 설계 개념들을 
 * 전체 시스템을 ```entity```, ```usecase```, ```interface``` 계층으로 구분했다.
 * 이 규칙을 따라서 서비스를 구현한다. 이 계층들의 의미는 Clean architecture[[en](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)/[kr](https://blog.coderifleman.com/2017/12/18/the-clean-architecture/)]를 참조하면 된다.
 
-![README](https://www.plantuml.com/plantuml/png/0/VP5D3e9038NtSugv09o048r_SIKR5oxhK8qHPqZR2I7gtMK0DGXnbgzlllQrCnOWyRT2ALC0ipuuJxlABa7W28oiL0dc2cVKHqB8Ix0nMhb8hPDaJN33DDLtfPktwkGuJdNuFJS6cJSWM46jdXCSpsYQ5WDGIzftXQqjlMIEf6Ls-EbwyeYYhof8OCJHqFjMMrYlxhpqY3_USPZW7QdT4AFrJGM_X0OdCFYpmuoGCTHq53scXrmuA-IA0WSv1fb_B1ze66M6Dc-E_G80 "README")
+![README](https://www.plantuml.com/plantuml/svg/0/VP5D3e9038NtSugv09o048r_SIKR5oxhK8qHPqZR2I7gtMK0DGXnbgzlllQrCnOWyRT2ALC0ipuuJxlABa7W28oiL0dc2cVKHqB8Ix0nMhb8hPDaJN33DDLtfPktwkGuJdNuFJS6cJSWM46jdXCSpsYQ5WDGIzftXQqjlMIEf6Ls-EbwyeYYhof8OCJHqFjMMrYlxhpqY3_USPZW7QdT4AFrJGM_X0OdCFYpmuoGCTHq53scXrmuA-IA0WSv1fb_B1ze66M6Dc-E_G80 "README")
 
 <!-- ```plantuml
 @startuml
