@@ -9,9 +9,12 @@ Bread pan
 
 시작하기
 -----
-예제로 만든 것들을 돌려보는 것
+예제로 만든 것들을 돌려보기 
 
+### Back-end 
 ```bash
+# Backend
+$ cd backend
 
 # Initialization 
 $ make init
@@ -19,14 +22,34 @@ $ make init
 # Run backend test
 $ make test
 
-# Run backend service
-$ make backend-run 
+# Run backend service (flask make component)
+$ make run
 
-# Run front-end dev mode
-$ make frontend-dev
-
+# Clean project
+$ make clean
 ```
- 자세한 내용은 `Makefile`을 참고하면 된다. 
+
+### Front-end 
+```bash
+# Backend
+$ cd frontend/todoapp
+
+# Initialization 
+$ make init
+
+# Run test
+$ make test
+
+# Run develop mode
+$ make dev 
+
+# Run build
+$ make build
+
+# Clean project
+$ make clean
+```
+
 
 -----------
 
@@ -72,12 +95,11 @@ package breadpan.interface <<Frame>> {
 ``` -->
 
 
-이런 생각에 따라, 아래와 같이 작업을 하면 된다. 
+이런 생각에 따라, 아래와 같이 작업을 하면 된다.
 
-1. Business model에서 사용하는 Entity 계층을 구현하고 테스트 
-2. Business logic을 담고 있는 Usecase들 계층을 구현하고 테스트 
-3. 외부 인터페이스와 연결되는 Controller / Presenter를 구현하고 연결하고 테스트 
-
+1. Business model에서 사용하는 Entity 계층을 구현하고 테스트한다.  
+2. Business logic을 담고 있는 Usecase들 계층을 구현하고 테스트한다.  
+3. 외부 인터페이스와 연결되는 Controller / Presenter를 구현하고 연결하고 테스트한다. 
 
 ### 설명하기 위한 예제  
 
@@ -86,6 +108,7 @@ package breadpan.interface <<Frame>> {
 ### Entity 계층 구현 
 
 가장 Business의 기본이 되는 정보를 담고 있다. 이것은 아래와 같이 `Entity`라는 Interface를 상속받아 구현한다.  
+
 ```python
 from breadpan.entity import Entity
 
@@ -93,10 +116,10 @@ class ToDoEntity(Entity):
     """Example of data entity class for ToDo
     """
     def __init__(self, todo_id:str, task:dict):
-        """Contructor 
-        
+        """Contructor
+
         Arguments:
-            Entity {[Entity]} -- Base entity class
+            Entity {Entity} -- Base entity class
             todo_id {str} -- ID of todo item. Linked to entity_key.
             task {dict} -- Contents of todo task.
         """
@@ -119,7 +142,7 @@ class ToDoCreateInteractor(UsecaseInteractor):
         contents = self.input["contents"]
         t = ToDoEntity(todo_id, contents['task'])
 
-        # Store the data. 
+        # Store the data.
         data.create(t)
 
         # Link to output port
@@ -166,9 +189,9 @@ class TodoDataInMemory(DataAccessGateway):
 
 #### Controller / Presenter
 
-Controller는 실제 외부의 Framework나 Platform에 이어져서 
+Controller는 실제 외부의 Framework나 Platform에 이어져서 Interface역할을 하는 모듈이다.
 
-실제 외부의 interface와 연결되서 입력/출력을 총괄하는 모듈인 Controller와 Presenter는 아래와 같이 작성한다. 
+Controller와 Presenter는 아래와 같이 작성한다.
 
 ```python
 from breadpan.interface import Controller, Presenter
@@ -184,7 +207,7 @@ class ToDoPresenter(Presenter):
 
 class ToDoController(Controller):
     def __init__(self):
-        self.__data = TodoDataInMemory() # Memory를 이용하게 구현한 DB 모듈.
+        self.__data = TodoDataInMemory() # Memory를 이용하게 구현한 DB 모듈. 이들 다른 RDBMS용으로 만들어진 모듈로 대체할 수도 있다.
 
     def create(self, todo_id, contents):
         i = ToDoCreateInteractor(todo_id=todo_id, contents=contents)
@@ -193,10 +216,9 @@ class ToDoController(Controller):
 
 ```
 
-실제 이를 가지고 Flask에 연결해서 사용한다면, 이렇게 쓰이게 된다.
+이를 가지고 Flask에 연결해서 사용한다면, 이렇게 쓰이게 된다.
 
 ```python
-
 import todo
 todoCtrl = todo.ToDoController()
 

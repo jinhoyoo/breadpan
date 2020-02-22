@@ -15,6 +15,5 @@ clean:
 	rm -rf .next/
 	rm -rf node_modules/
 
-
 test:
-	yarn test
+	yarn type-check
