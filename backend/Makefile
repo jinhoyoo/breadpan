@@ -5,8 +5,9 @@ init:
 run:
 	$(shell env FLASK_APP=apps/flask/main.py flask run)
 
+.PHONY :clean
 clean:
 	$(shell find . | grep -E "(__pycache__|\.pyc|\.pyo$ )" | xargs rm -rf)
 
 test:
-	nosetests tests
+	python -m unittest discover . -v
