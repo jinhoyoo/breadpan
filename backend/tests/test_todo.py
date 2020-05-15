@@ -1,11 +1,11 @@
 import os
 import sys
+import unittest
 
 # Link upper directory path for python module path. 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import breadpan, todo
-import unittest
 
 class TestTodoApp(unittest.TestCase):
 
