@@ -53,7 +53,11 @@ class ToDoDeleteInteractor(UsecaseInteractor):
         # Get task ID
         todo_id = self.input["todo_id"]
         
-        # Delete data by entity id. 
-        data.delete(todo_id)
 
-        return UsecaseOutputPort()
+        # Delete data by entity id. 
+        try:
+            data.delete(todo_id)
+            # Succeed with empty dictionary. 
+            return UsecaseOutputPort(todo={})
+        except Exception as e:
+            raise e

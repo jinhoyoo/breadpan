@@ -2,6 +2,10 @@ from abc import ABCMeta, abstractmethod
 from breadpan.usecase import UsecaseOutputPort
 from breadpan.entity import Entity
 
+class NoDataInPresenter(Exception):
+    """No data from interactor"""
+    pass
+
 class Presenter(UsecaseOutputPort):
     """IPresenter 
     """

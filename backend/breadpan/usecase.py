@@ -3,6 +3,7 @@ from breadpan.entity import Entity
 
 class DataAccessGateway(metaclass=ABCMeta):
     """Interface of data access class. 
+    
     """
         
     @abstractmethod
@@ -31,9 +32,11 @@ class UsecaseInputPort(object):
     """Interface of use case input port.
 
     """
-    input = {}
 
     def __init__(self, **kwargs):
+        """Constructor
+        """
+        self.input = {}
         for key, value in kwargs.items():
             self.input[key] = value
 
@@ -44,7 +47,8 @@ class UsecaseInteractor(UsecaseInputPort):
     """
     @abstractmethod
     def run(self, data: DataAccessGateway):
-        """operate
+        """Implementation of usecase.
+
         Will return the class inherited from UsecaseOutputPort.
         """
         pass
@@ -54,9 +58,11 @@ class UsecaseOutputPort(metaclass=ABCMeta):
     """Interface of use case input port.
 
     """
-    output = {}
 
     def __init__(self, **kwargs):
+        """Constructor
+        """
+        self.output = {}
         for key, value in kwargs.items():
             self.output[key] = value
     

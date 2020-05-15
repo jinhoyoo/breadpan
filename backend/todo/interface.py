@@ -1,4 +1,4 @@
-from breadpan.interface import Controller, Presenter
+from breadpan.interface import Controller, Presenter, NoDataInPresenter
 from todo.entity import ToDoEntity
 from todo.usecase import DataAccessGateway, ToDoCreateInteractor, ToDoUpdateInteractor, ToDoReadInteractor, ToDoDeleteInteractor, ToDoReadAllInteractor
 
@@ -29,6 +29,7 @@ class TodoDataInMemory(DataAccessGateway):
         return
 
 
+
 class ToDoPresenter(Presenter):
     """ToDoPresenter
     
@@ -36,7 +37,12 @@ class ToDoPresenter(Presenter):
     """
     def show(self):
         todo_entry = self.output['todo']
-        return { todo_entry.entity_key : {'task':todo_entry.task}  }
+
+        if todo_entry == {} :
+            return {}
+        else:
+            return { todo_entry.entity_key : {'task':todo_entry.task}  }
+
 
 class ToDosPresenter(Presenter):
     """ToDosPresenter
