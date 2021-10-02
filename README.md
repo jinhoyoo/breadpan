@@ -283,3 +283,7 @@ Folder structure
 * Clean architecture의 엄격한 정의/적용 : 이 구조는 '해석한' 형태다. 
 * 특정 Web framework에 맞춰서 코드를 재포장하지 않는다. 이러한 코드들은 이른바'main' component안에 들어가야 한다.
     * 여기서 main component란, 특정 Framework나 Platform에 따라 사용하는 이른바 '세부사항'들이 제일 복잡하게 엉켜지는 Component를 말한다.
+
+
+<!-- # REFERENCE
+https://packaging.python.org/tutorials/packaging-projects/#packaging-python-projects -->
