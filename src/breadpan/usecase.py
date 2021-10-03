@@ -1,32 +1,6 @@
 from abc import *
 from breadpan.entity import Entity
 
-class DataAccessGateway(metaclass=ABCMeta):
-    """Interface of data access class. 
-    """
-        
-    @abstractmethod
-    def create(self, entity: Entity):
-        pass
-
-    @abstractmethod
-    def read(self,  entity_id: str, **kwargs):
-        pass
-
-    @abstractmethod
-    def read_all(self, **kwargs):
-        pass
-
-    @abstractmethod
-    def update(self, **kwargs):
-        pass
-
-    @abstractmethod
-    def delete(self, entity_id: str, **kwargs):
-        pass
-
-
-
 class UsecaseInputPort(object):
     """Interface of use case input port.
 
@@ -43,7 +17,7 @@ class UsecaseInteractor(UsecaseInputPort):
 
     """
     @abstractmethod
-    def run(self, data: DataAccessGateway):
+    def run(self,  **kwargs):
         """operate
         Will return the class inherited from UsecaseOutputPort.
         """

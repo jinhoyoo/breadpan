@@ -1,8 +1,6 @@
-
-from breadpan.usecase import DataAccessGateway, UsecaseInteractor,UsecaseOutputPort
+from breadpan.usecase import  UsecaseInteractor, UsecaseOutputPort
+from breadpan.interface import DataAccessGateway
 from todo.entity import ToDoEntity
-
-
 
 class ToDoCreateInteractor(UsecaseInteractor):
     def run(self,  data: DataAccessGateway):        

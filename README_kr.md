@@ -1,25 +1,69 @@
-Breadpan
+Bread pan
 ========
 
- The framework implemented the architecture by following 'Clean architecture' in python. 
+기본적인 웹서비스를 간단하게 만드는 프로젝트 틀. 이 프로젝트를 Clone해서 이름을 바꿔서 진행하기를 권장한다. 
 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf-dHcXXifrSmL6RBJG5hdggKjvlcko0Or4IZW2j-myy2kTUbD&s" width="500px" title="Bread pan" alt="BreadPan"/>
 
 
->This implementation includes: 
->
->- The basic application structure to apply 'clean architecture' concepts including presenter, controller, interactor, and data gateway
->- The example of RESTful API server 
->
->And it didn't include:
->
->- No real implementation of data gateway for RDBMS or NoSQL DB
+
+시작하기
+-----
+예제로 만든 것들을 돌려보기 
+
+### Back-end 
+```bash
+# Backend
+$ cd backend
+
+# Initialization 
+$ make init
+
+# Run backend test
+$ make test
+
+# Run backend service (flask make component)
+$ make run
+
+# Clean project
+$ make clean
+```
+
+### Front-end 
+```bash
+# Backend
+$ cd frontend/todoapp
+
+# Initialization 
+$ make init
+
+# Run test
+$ make test
+
+# Run develop mode
+$ make dev 
+
+# Run build
+$ make build
+
+# Clean project
+$ make clean
+```
 
 
-<br/>
+-----------
 
-Basic architecture 
-------
+
+Breadpan을 이용해서 시스템을 만드는 방법
+-----
+
+### 시작하는 순서 
+
+
+breadpan을 이용해서 구현을 할 때 먼저 아래의 설계 개념들을 생각해야 한다. 
+
+* 전체 시스템을 ```entity```, ```usecase```, ```interface``` 계층으로 구분했다.
+* 이 규칙을 따라서 서비스를 구현한다. 이 계층들의 의미는 Clean architecture[[en](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)/[kr](https://blog.coderifleman.com/2017/12/18/the-clean-architecture/)]를 참조하면 된다.
 
 ![README](https://www.plantuml.com/plantuml/svg/0/VP5D3e9038NtSugv09o048r_SIKR5oxhK8qHPqZR2I7gtMK0DGXnbgzlllQrCnOWyRT2ALC0ipuuJxlABa7W28oiL0dc2cVKHqB8Ix0nMhb8hPDaJN33DDLtfPktwkGuJdNuFJS6cJSWM46jdXCSpsYQ5WDGIzftXQqjlMIEf6Ls-EbwyeYYhof8OCJHqFjMMrYlxhpqY3_USPZW7QdT4AFrJGM_X0OdCFYpmuoGCTHq53scXrmuA-IA0WSv1fb_B1ze66M6Dc-E_G80 "README")
 
@@ -51,31 +95,19 @@ package breadpan.interface <<Frame>> {
 ``` -->
 
 
+이런 생각에 따라, 아래와 같이 작업을 하면 된다.
 
+1. Business model에서 사용하는 Entity 계층을 구현하고 테스트한다.  
+2. Business logic을 담고 있는 Usecase들 계층을 구현하고 테스트한다.  
+3. 외부 인터페이스와 연결되는 Controller / Presenter를 구현하고 연결하고 테스트한다. 
 
-Demo project 
------
+### 설명하기 위한 예제  
 
-* See [demo](demo/) project
+이 구조에 따라서 실제 Application을 만드는 예제로 할 일 관리 시스템(To-Do management system)를 만들어 보려고 한다.
 
-<br/>
+### Entity 계층 구현 
 
-Getting started
------
-
-### 1. Installation 
-
-``` bash
-$ pip install breadpan
-```
-
-### 2. Define the entities
-
- As an example, I'll show the `to-do management` service.
-
- If you design the software architecture, you'll begin from the 'defining of information structure'. The information is composed from the data. The `entity`is the single unique object in the real world that is being mastered. (From [this](https://www.ibm.com/docs/en/imdm/12.0?topic=concepts-key-entity-attribute-entity-type) document)
-
- With breadpan, you can define the entity by inherited from the `breadpan.entity` like the following. 
+가장 Business의 기본이 되는 정보를 담고 있다. 이것은 아래와 같이 `Entity`라는 Interface를 상속받아 구현한다.  
 
 ```python
 from breadpan.entity import Entity
@@ -95,71 +127,30 @@ class ToDoEntity(Entity):
         self.task = task
 ```
 
+### Usecase들 계층 구현 
 
-### 3. Implement the usecase layer 
-
-As a `to-do management`, we need five operations at least. 
-
-- Create a new `to-do` item
-- Read `to-do` user made
-- List up `to-do` items  
-- Update `to-do` item
-- Delete `to-do` item
-
-These operations are very independent from any views or external database or APIs. So we can make abstract interface and we call it `DataAccessGateway`. Then we can separate real operation and external interface with `breadpan.UsecaseInteractor` like the following.  
-
+실제 데이터를 담아서 처리하는 `Interactor`를 구현해서 `UsecaseOutputPort`을 이용해서 원하는 이름의 데이터로 내보내게 된다.  
 
 ```python
 from breadpan.entity import UsecaseInteractor, UsecaseOutputPort
 from todo.entity import ToDoEntity
 
-# Operation: Create a new `to-do` item
 class ToDoCreateInteractor(UsecaseInteractor):
-    def run(self, database: DataAccessGateway):
-
+    def run(self,  data: DataAccessGateway):
         # Get id from the controller's data.
         todo_id = self.input["todo_id"]
         contents = self.input["contents"]
-
-        # Create TodoEntity.
         t = ToDoEntity(todo_id, contents['task'])
 
-        # Store the data into data base.
-        database.create(t)
+        # Store the data.
+        data.create(t)
 
         # Link to output port
         return UsecaseOutputPort(todo=t) #Expose the data 't' with 'todo' as key.
-
 ```
-
-The `breadpan.UsecaseInteractor` has the special member variable, `input`. This member variable has all of data that you put into the interactor class. This code shows how you can put the data into this interactor class. 
-
-``` python
-data = RealDatabaseGateway()
-i = ToDoCreateInteractor(todo_id=todo_id, contents=contents)
-result = i.run(data)
-```
-
-
-### 4. Implement the the interface layer
-
-In this step, we'll do several things like the following. 
-
-1. Define the datagateway  
-2. Define the controller 
-3. Define the presenter 
-4. Define the 
-
-
-
-
-
-
 
 
 ### Interface 계층 구현 
-
-
 
 #### DataAccessGateway
 `DataAccessGateway`는 데이터 접근하는 Class들의 기본적인 인터페이스다. 예를 들어 dictionary로 데이터를 저장하는 구조를 짜면 아래와 같이 짤 수 있다. MySQL등의 외부 데이터베이스들에 접근해서 데이터를 기록하는 것도 이 인터페이스로 확장할 수 있다. 
@@ -258,10 +249,6 @@ api.add_resource(FlaskTodoController, '/todos/<todo_id>')
  [구현하는 방법](docs/how_to_implement.md)을 참조하기 바란다. 
 
 -----------
-
-
-
-
 
 Folder structure
 -------

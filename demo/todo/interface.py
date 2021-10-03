@@ -8,24 +8,24 @@ class TodoDataInMemory(DataAccessGateway):
     Store ToDoEntity as {key, value}:=>{todo_id, task}.
     """
     def __init__(self):
-        self.TODOS = {}
+        self.memory_db = {}
 
     def create(self, entity: ToDoEntity):
-        self.TODOS[entity.entity_key] = entity.task
+        self.memory_db[entity.entity_key] = entity.task
         return
 
     def read(self, entity_id) -> ToDoEntity:
-        return ToDoEntity(entity_id, self.TODOS[entity_id])
+        return ToDoEntity(entity_id, self.memory_db[entity_id])
 
     def read_all(self):
-        return [ ToDoEntity(key, value) for key, value in self.TODOS.items() ]
+        return [ ToDoEntity(key, value) for key, value in self.memory_db.items() ]
 
     def update(self, entity: ToDoEntity, **kwargs):
-        self.TODOS[entity.entity_key] = entity.task
+        self.memory_db[entity.entity_key] = entity.task
         return
 
     def delete(self, entity_id: str):
-        del self.TODOS[entity_id]
+        del self.memory_db[entity_id]
         return
 
 

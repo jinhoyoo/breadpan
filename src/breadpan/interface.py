@@ -38,3 +38,28 @@ class Controller(metaclass=ABCMeta):
     def delete(self,  **kwargs) -> Presenter:
         pass
 
+
+
+class DataAccessGateway(metaclass=ABCMeta):
+    """Interface of data access class. 
+    """
+        
+    @abstractmethod
+    def create(self, entity: Entity):
+        pass
+
+    @abstractmethod
+    def read(self,  entity_id: str, **kwargs):
+        pass
+
+    @abstractmethod
+    def read_all(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def update(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete(self, entity_id: str, **kwargs):
+        pass
