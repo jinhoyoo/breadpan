@@ -26,8 +26,9 @@ Breadpan
 >
 >- No real implementation of data gateway for RDBMS or NoSQL DB
 
-<br/>
+
 <hr/>
+
 Basic architecture
 ------
 
