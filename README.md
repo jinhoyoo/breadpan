@@ -26,8 +26,9 @@ Breadpan
 >
 >- No real implementation of data gateway for RDBMS or NoSQL DB
 
-<br/>
+
 <hr/>
+
 Basic architecture
 ------
 
@@ -72,8 +73,6 @@ You can design the system architecture by following these layering rules. I unde
 
 Getting started by example, `to-do management`
 -----
-
-<br>
 
 ### 1. Installation
 
